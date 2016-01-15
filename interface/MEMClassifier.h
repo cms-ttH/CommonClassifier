@@ -48,6 +48,13 @@ public:
   // returns the category of the last evaluated Event
   std::string GetCategoryOfLastEvaluation() const;
 
+  double GetBTagLikelihoodRatio(
+    const std::vector<TLorentzVector>& selectedJetP4,
+    const std::vector<double>& selectedJetCSV,
+    std::vector<unsigned int>& out_best_perm
+  );
+
+
 private:
   //Holds the transfer functions
   TFile* transfers;
@@ -68,11 +75,6 @@ private:
   TF1* getTransferFunction(const char* flavour, double eta) const;
   double GetJetBProbability(const char* flavour, double pt, double eta, double bdisc);
   MEM::JetProbability GetJetBProbabilities(const TLorentzVector& p4, double bdisc);
-  double GetBTagLikelihoodRatio(
-    const std::vector<TLorentzVector>& selectedJetP4,
-    const std::vector<double>& selectedJetCSV,
-    std::vector<unsigned int>& out_best_perm
-  );
   TH3D* GetBTagPDF(const char* flavour);
 
   long unsigned int numMaxJets = 8;

@@ -20,6 +20,17 @@ MEMResult MEMClassifier::GetOutput(
     std::vector<unsigned int> best_perm;
     double blr_4b_2b = GetBTagLikelihoodRatio(selectedJetP4, selectedJetCSV, best_perm);
     std::cout << "blr=" << blr_4b_2b << " perm ";
+    if(std::isnan(blr_4b_2b)){
+	MEMResult res;
+	res.p=-1.;
+	res.p_sig=-1.;
+	res.p_bkg=-1.;
+	res.p_err_sig=-1.;
+	res.p_err_bkg=-1.;
+	res.n_perm_sig=-1.;
+	res.n_perm_bkg=-1.;
+	return res;
+    }
     for (auto i : best_perm) {
         std::cout << i << " ";
     }
