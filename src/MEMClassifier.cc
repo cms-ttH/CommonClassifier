@@ -27,6 +27,9 @@ void MEMClassifier::setup_mem(
     if (selectedLeptonP4.size() != 1) {
         throw std::runtime_error("Expected a single-lepton event");
     }
+    if (selectedJetP4.size() != selectedJetCSV.size()) {
+        throw std::runtime_error("number of jets and tags should be the same!");
+    }
     
     std::vector<unsigned int> best_perm;
     double blr_4b = 0.0;
@@ -247,7 +250,9 @@ TH3D* MEMClassifier::GetBTagPDF(const char* flavour) {
 double MEMClassifier::GetJetBProbability(const char* flavour, double pt, double eta, double bdisc) {
     TH3D* h = GetBTagPDF(flavour);
     int i = h->FindBin(pt, std::abs(eta), bdisc);
-    return h->GetBinContent(i);
+    double c= h->GetBinContent(i);
+    delete h;
+    return c;
 }
 
 MEM::JetProbability MEMClassifier::GetJetBProbabilities(
