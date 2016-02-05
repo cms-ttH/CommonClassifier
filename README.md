@@ -8,6 +8,7 @@ Setup
 
 ~~~
 cd $CMSSW_BASE/src
+cmsenv
 mkdir TTH
 cd TTH
 git clone https://github.com/cms-ttH/CommonClassifier.git

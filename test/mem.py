@@ -25,7 +25,6 @@ for ev in events:
     for ij, j in enumerate(jets_p4):
         c_jets_p4.push_back(make_p4(*j))
         c_jets_csv.push_back(jets_csv[ij])
-        print j, jets_csv[ij], jets_btag[ij]
 
     c_leps_p4 = CvectorLorentz()
     c_leps_charge = Cvectordouble()
@@ -40,7 +39,7 @@ for ev in events:
     c_loosejets_p4 = CvectorLorentz()
     c_loosejets_csv = Cvectordouble()
     if jsev["event"]["cat"].startswith("sl"):
-        print "tthbb13 blr=", jsev["event"]["blr"], "mem=", jsev["output"]["p_tth"], jsev["output"]["p_ttbb"], jsev["output"]["p"]
+        print "tthbb13 code blr=", jsev["event"]["blr"], "mem=", jsev["output"]["p_tth"], jsev["output"]["p_ttbb"], jsev["output"]["p"]
 
         ret = f.GetOutput(c_leps_p4, c_leps_charge, c_jets_p4, c_jets_csv, c_loosejets_p4, c_loosejets_csv, met_p4)
-        print "mem.py mem=", ret.p_sig, ret.p_bkg, ret.p
+        print "mem.py blr=", ret.blr_4b/(ret.blr_4b + ret.blr_2b), "mem=", ret.p_sig, ret.p_bkg, ret.p

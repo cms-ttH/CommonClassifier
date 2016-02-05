@@ -16,4 +16,9 @@
 <use   name="TTH/CommonClassifier"/>
 <bin name="mem_test" file="mem_test.cc"></bin>
 <bin name="bdt_test" file="bdt_test.cc"></bin>
+<bin name="Blrbdt_test" file="Blrbdt_test.cc"></bin>
+<bin name="Membdt_test" file="Membdt_test.cc"></bin>
+<bin name="DLbdt_test" file="DLbdt_test.cc"></bin>
+<bin name="MembdtV2_test" file="MembdtV2_test.cc"></bin>
+
 <Flags CXXFLAGS="-g"/>

@@ -9,6 +9,9 @@
 
 class MEMResult {
 public:
+  double blr_4b;
+  double blr_2b;
+
   //likelihood ratio
   double p;
 
@@ -44,16 +47,29 @@ public:
     const std::vector<double>& looseSelectedJetCSV,
     TLorentzVector& metP4
   );
-
-  // returns the category of the last evaluated Event
-  std::string GetCategoryOfLastEvaluation() const;
+  
+  void setup_mem(
+    const std::vector<TLorentzVector>& selectedLeptonP4,
+    const std::vector<double>& selectedLeptonCharge,
+    const std::vector<TLorentzVector>& selectedJetP4,
+    const std::vector<double>& selectedJetCSV,
+    const std::vector<TLorentzVector>& looseSelectedJetP4,
+    const std::vector<double>& looseSelectedJetCSV,
+    TLorentzVector& metP4,
+    std::vector<MEM::Object*>& objs,
+    MEMResult& res
+  );
 
   double GetBTagLikelihoodRatio(
     const std::vector<TLorentzVector>& selectedJetP4,
     const std::vector<double>& selectedJetCSV,
-    std::vector<unsigned int>& out_best_perm
+    std::vector<unsigned int>& out_best_perm,
+    double& out_P_4b,
+    double& out_P_2b
   );
 
+  // returns the category of the last evaluated Event
+  std::string GetCategoryOfLastEvaluation() const;
 
 private:
   //Holds the transfer functions
@@ -68,16 +84,18 @@ private:
   MEM::JetLikelihood* blr;
 
   //Convenience functions to construct MEM input objects
-  MEM::Object* make_jet(double pt, double eta, double phi, double mass, double csv) const;
+  MEM::Object* make_jet(double pt, double eta, double phi, double mass, double istagged, double csv) const;
   MEM::Object* make_lepton(double pt, double eta, double phi, double mass, double charge) const;
   
   // Returns the transfer function corresponding to a jet flavour and eta
   TF1* getTransferFunction(const char* flavour, double eta) const;
   double GetJetBProbability(const char* flavour, double pt, double eta, double bdisc);
   MEM::JetProbability GetJetBProbabilities(const TLorentzVector& p4, double bdisc);
+  
   TH3D* GetBTagPDF(const char* flavour);
 
   long unsigned int numMaxJets = 8;
+  long unsigned int numMaxJetsBLR = 8;
 };
 
 #endif
