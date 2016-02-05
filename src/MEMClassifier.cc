@@ -84,11 +84,13 @@ void MEMClassifier::setup_mem(
         MEM::Object* lep = make_lepton(lep_p4.Pt(), lep_p4.Eta(), lep_p4.Phi(), lep_p4.M(), selectedLeptonCharge[il]);
         objs.push_back(lep);
         integrand->push_back_object(lep);
+        std::cout << "adding lep " << lep->p4().Pt() << " charge " << lep->getObs(MEM::Observable::CHARGE) << std::endl;
     }
 
     assert(metP4.Pt() > 0);
-    MEM::Object met(metP4, MEM::ObjectType::MET );
-    integrand->push_back_object(&met);
+    MEM::Object* met = new MEM::Object(metP4, MEM::ObjectType::MET );
+    std::cout << "adding met pt " << met->p4().Pt() << " phi " << met->p4().Phi() << std::endl;
+    integrand->push_back_object(met);
 }
 
 MEMResult MEMClassifier::GetOutput(
@@ -119,7 +121,6 @@ MEMResult MEMClassifier::GetOutput(
             MEM::PSVar::cos_q1, MEM::PSVar::phi_q1, MEM::PSVar::cos_qbar1, MEM::PSVar::phi_qbar1
         }
     );
-
     std::cout << "MEM running background" << std::endl;
     MEM::MEMOutput res_bkg = integrand->run(
         MEM::FinalState::LH, MEM::Hypothesis::TTBB, {}, {
@@ -130,6 +131,7 @@ MEMResult MEMClassifier::GetOutput(
         delete o;
     }
     objs.clear();
+    integrand->next_event();
 
     res.p_sig = res_sig.p;
     res.p_bkg = res_bkg.p;
@@ -219,10 +221,10 @@ MEMClassifier::MEMClassifier() : cfg(MEM::MEMConfig()) {
 
     integrand = new MEM::Integrand(
         0
-        // MEM::DebugVerbosity::output
-        // |MEM::DebugVerbosity::init
-        // |MEM::DebugVerbosity::input
-        // |MEM::DebugVerbosity::init_more
+        //MEM::DebugVerbosity::output
+        //|MEM::DebugVerbosity::init
+        //|MEM::DebugVerbosity::input
+        //|MEM::DebugVerbosity::init_more
         // |MEM::DebugVerbosity::integration
         ,cfg
     );
