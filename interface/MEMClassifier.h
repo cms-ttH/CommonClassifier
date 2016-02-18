@@ -47,7 +47,8 @@ class MEMClassifier {
         DEBUG,         // Don't run the MEM. Print debug info
         SL_0W2H2T,     // Default SL MEM: Integrate over light jets
         SL_2W2H2T,     // Fully reconstructed hypothesis
-        SL_2W2H2T_SJ,  // Boosted SL MEM: 2 light jets + bjets
+        SL_2W2H2T_SJ,  // Boosted SL MEM: 2 light jets + bjets, permutate across event
+        SL_2W2H2T_SJ_RESTPERM,  // Boosted SL MEM: 2 light jets + bjets, restrict permuations
         DL_0W2H2T,     // Default DL MEM
     };
 
@@ -111,6 +112,19 @@ class MEMClassifier {
         MEMResult& res
     );
 
+    void setup_mem_sl_2w2h2t_sj_restperm(
+        const std::vector<TLorentzVector>& selectedLeptonP4,
+        const std::vector<double>& selectedLeptonCharge,
+        const std::vector<TLorentzVector>& selectedJetP4,
+        const std::vector<double>& selectedJetCSV,
+        const std::vector<JetType>& selectedJetType,
+        const std::vector<TLorentzVector>& looseSelectedJetP4,
+        const std::vector<double>& looseSelectedJetCSV,
+        TLorentzVector& metP4,
+        std::vector<MEM::Object*>& objs,
+        MEMResult& res
+    );
+
     void setup_mem_sl_2w2h2t(
         const std::vector<TLorentzVector>& selectedLeptonP4,
         const std::vector<double>& selectedLeptonCharge,
@@ -150,7 +164,7 @@ class MEMClassifier {
     MEM::JetLikelihood* blr;
 
     //Convenience functions to construct MEM input objects
-    MEM::Object* make_jet(double pt, double eta, double phi, double mass, double istagged, double csv, bool is_subjet) const;
+    MEM::Object* make_jet(double pt, double eta, double phi, double mass, double istagged, double csv, bool is_subjet, int pdg_id=0) const;
     MEM::Object* make_lepton(double pt, double eta, double phi, double mass, double charge) const;
 
     // Returns the transfer function corresponding to a jet flavour and eta

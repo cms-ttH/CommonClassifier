@@ -19,12 +19,20 @@ void MEMClassifier::setup_mem(
     integrand->next_event();
 
     integrand->set_cfg(cfg);
-    integrand->set_permutation_strategy
-    ({
-        MEM::Permutations::QQbarBBbarSymmetry,
-        MEM::Permutations::QUntagged,
-        MEM::Permutations::BTagged,
-    });
+
+    if (hypo==SL_2W2H2T_SJ_RESTPERM){
+      integrand->set_permutation_strategy({
+	  MEM::Permutations::QQbarBBbarSymmetry,
+	  MEM::Permutations::HEPTopTagged
+	});
+    }
+    else{    
+      integrand->set_permutation_strategy({
+	  MEM::Permutations::QQbarBBbarSymmetry,
+	  MEM::Permutations::QUntagged,
+	  MEM::Permutations::BTagged,
+	});
+    }
 
     switch (hypo) {
 
@@ -71,6 +79,20 @@ void MEMClassifier::setup_mem(
                                metP4,
                                objs,
                                res);
+        break;
+    }
+
+    case SL_2W2H2T_SJ_RESTPERM: {
+        setup_mem_sl_2w2h2t_sj_restperm(selectedLeptonP4,
+					selectedLeptonCharge,
+					selectedJetP4,
+					selectedJetCSV,
+					selectedJetType,
+					looseSelectedJetP4,
+					looseSelectedJetCSV,
+					metP4,
+					objs,
+					res);
         break;
     }
 
@@ -424,6 +446,116 @@ void MEMClassifier::setup_mem_sl_2w2h2t_sj(
 }
 
 
+
+void MEMClassifier::setup_mem_sl_2w2h2t_sj_restperm(
+    const std::vector<TLorentzVector>& selectedLeptonP4,
+    const std::vector<double>& selectedLeptonCharge,
+    const std::vector<TLorentzVector>& selectedJetP4,
+    const std::vector<double>& selectedJetCSV,
+    const std::vector<JetType>& selectedJetType,
+    const std::vector<TLorentzVector>& looseSelectedJetP4,
+    const std::vector<double>& looseSelectedJetCSV,
+    TLorentzVector& metP4,
+    std::vector<MEM::Object*>& objs,
+    MEMResult& res
+) {
+
+    if (selectedLeptonP4.size() != 1) {
+        throw std::runtime_error("Expected a single-lepton event");
+    }
+
+    // Make sure we received a suitable set of input jets
+    // Require:
+    //  * exactly 6 jets
+    //  * 2 light boosted
+    //  * 1 b boosted
+    //  * 3 resolved
+
+    int n_light_boosted(0), n_b_boosted(0), n_resolved(0);
+
+    assert(selectedJetP4.size() == 6);
+
+    std::vector<MEM::Object*> tagged;
+    std::vector<MEM::Object*> untagged;
+
+    for (unsigned int ij=0; ij<selectedJetP4.size(); ij++) {
+
+        TLorentzVector p4 = selectedJetP4.at(ij);
+        assert(p4.Pt() > 0);
+
+        switch (selectedJetType[ij]) {
+
+        case RESOLVED: {
+            MEM::Object* jet = make_jet(
+                                   p4.Pt(), p4.Eta(), p4.Phi(), p4.M(), 1.0,
+                                   selectedJetCSV.at(ij),
+                                   false, 
+				   0
+                               );
+
+            tagged.push_back(jet);
+            n_resolved++;
+            break;
+        }
+
+        case BOOSTED_LIGHT: {
+            MEM::Object* jet = make_jet(
+                                   p4.Pt(), p4.Eta(), p4.Phi(), p4.M(), 0.0,
+                                   selectedJetCSV.at(ij),
+                                   true,
+				   1
+                               );
+            untagged.push_back(jet);
+            n_light_boosted++;
+            break;
+        }
+
+        case BOOSTED_B: {
+            MEM::Object* jet = make_jet(
+                                   p4.Pt(), p4.Eta(), p4.Phi(), p4.M(), 1.0,
+                                   selectedJetCSV.at(ij),
+                                   true,
+				   5
+                               );
+            tagged.push_back(jet);
+            n_b_boosted++;
+            break;
+        }
+        }
+    }
+
+    assert(n_light_boosted==2);
+    assert(n_b_boosted==1);
+    assert(n_resolved==3);
+
+    for (auto* jet : tagged) {
+        objs.push_back(jet);
+        integrand->push_back_object(jet);
+        std::cout << "adding tagged jet " << jet->p4().Pt() << " btag " << jet->getObs(MEM::Observable::BTAG) << std::endl;
+    }
+
+    for (auto* jet : untagged) {
+        objs.push_back(jet);
+        integrand->push_back_object(jet);
+        std::cout << "adding untagged jet " << jet->p4().Pt() << " btag " << jet->getObs(MEM::Observable::BTAG) << std::endl;
+    }
+
+    for (unsigned int il=0; il < selectedLeptonP4.size(); il++) {
+        TLorentzVector lep_p4 = selectedLeptonP4.at(il);
+        assert(lep_p4.Pt() > 0);
+        MEM::Object* lep = make_lepton(lep_p4.Pt(), lep_p4.Eta(), lep_p4.Phi(), lep_p4.M(), selectedLeptonCharge[il]);
+        objs.push_back(lep);
+        integrand->push_back_object(lep);
+        std::cout << "adding lep " << lep->p4().Pt() << " charge " << lep->getObs(MEM::Observable::CHARGE) << std::endl;
+    }
+
+    assert(metP4.Pt() > 0);
+    MEM::Object* met = new MEM::Object(metP4, MEM::ObjectType::MET );
+    std::cout << "adding met pt " << met->p4().Pt() << " phi " << met->p4().Phi() << std::endl;
+    integrand->push_back_object(met);
+}
+
+
 MEMResult MEMClassifier::GetOutput(
     const Hypothesis hypo,
     const std::vector<TLorentzVector>& selectedLeptonP4,
@@ -479,8 +611,20 @@ MEMResult MEMClassifier::GetOutput(
 
         break;
     }
+
+
+    // Single Lepton - Boosted 222, Restricted Permuations
+    case SL_2W2H2T_SJ_RESTPERM: {
+        std::cout << "MEM running signal" << std::endl;
+        res_sig = integrand->run(MEM::FinalState::LH, MEM::Hypothesis::TTH, {}, {});
+
+        std::cout << "MEM running background" << std::endl;
+        res_bkg = integrand->run(MEM::FinalState::LH, MEM::Hypothesis::TTBB, {}, {});
+
+        break;
+    }
     
-    // Single Lepton - Boosted 222
+    // Single Lepton - 222
     case SL_2W2H2T: {
         std::cout << "MEM running signal" << std::endl;
         res_sig = integrand->run(MEM::FinalState::LH, MEM::Hypothesis::TTH, {}, {});
@@ -540,13 +684,13 @@ MEMResult MEMClassifier::GetOutput(
     return res;
 }
 
-MEM::Object* MEMClassifier::make_jet(double pt, double eta, double phi, double mass, double istagged, double csv, bool is_subjet) const {
+MEM::Object* MEMClassifier::make_jet(double pt, double eta, double phi, double mass, double istagged, double csv, bool is_subjet, int pdg_id) const {
     TLorentzVector lv;
     lv.SetPtEtaPhiM(pt, eta, phi, mass);
     MEM::Object* obj = new MEM::Object(lv, MEM::ObjectType::Jet);
     obj->addObs( MEM::Observable::BTAG, istagged); // 0 - jet is assumed to be from a light quark, 1 - a b quark
     obj->addObs( MEM::Observable::CSV, csv); //b-tagger
-    obj->addObs( MEM::Observable::PDGID, 0);  // currently not used
+    obj->addObs( MEM::Observable::PDGID, pdg_id);  // pdg id - can be used to restrict permutations
     // attach the transfer functions corresponding to the jet
     if (is_subjet) {
         obj->addTransferFunction(MEM::TFType::bReco, getTransferFunction("sjb", lv.Eta()));
