@@ -15,6 +15,7 @@
 <use   name="TTH/MEIntegratorStandalone"/>
 <use   name="TTH/CommonClassifier"/>
 <bin name="mem_test" file="mem_test.cc"></bin>
+<bin name="mem_test_dl" file="mem_test_dl.cc"></bin>
 <bin name="bdt_test" file="bdt_test.cc"></bin>
 <bin name="Blrbdt_test" file="Blrbdt_test.cc"></bin>
 <bin name="Membdt_test" file="Membdt_test.cc"></bin>
