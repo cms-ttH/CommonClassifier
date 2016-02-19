@@ -36,6 +36,7 @@ int main(){
   lv_met.SetPtEtaPhiM(92.1731872559,0., -1.08158898354, 0.);
   for (int i=0; i<2; i++) {
     auto res = mem.GetOutput(
+      MEMClassifier::Hypothesis::SL_0W2H2T,
       leps_p4,
       {-1},
       jets_p4,
@@ -47,6 +48,15 @@ int main(){
         0.437245458364,
         0.996093869209,
         0.212953850627
+      },
+      {  
+	MEMClassifier::JetType::RESOLVED,
+	MEMClassifier::JetType::RESOLVED,
+	MEMClassifier::JetType::RESOLVED,
+	MEMClassifier::JetType::RESOLVED,
+        MEMClassifier::JetType::RESOLVED,
+        MEMClassifier::JetType::RESOLVED,
+	MEMClassifier::JetType::RESOLVED,
       },
       {},
       {},

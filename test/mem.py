@@ -2,10 +2,11 @@ import ROOT, json
 ROOT.gSystem.Load("libTTHCommonClassifier")
 CvectorLorentz = getattr(ROOT, "std::vector<TLorentzVector>")
 Cvectordouble = getattr(ROOT, "std::vector<double>")
+CvectorJetType = getattr(ROOT, "std::vector<int>")
 
 f = ROOT.MEMClassifier()
 
-inf = open("root/events.json")
+inf = open("root/events_6j.json")
 data = inf.read()
 events = data.split("\n\n\n")[:-1]
 
@@ -15,6 +16,7 @@ def make_p4(pt, eta, phi, m):
     return v
 
 for ev in events:
+    print "----"
     jsev = json.loads(ev)
     jets_p4 = jsev["input"]["selectedJetsP4"]
     jets_csv = jsev["input"]["selectedJetsCSV"]
@@ -22,9 +24,11 @@ for ev in events:
 
     c_jets_p4 = CvectorLorentz()
     c_jets_csv = Cvectordouble()
+    c_jets_jettype = CvectorJetType()
     for ij, j in enumerate(jets_p4):
         c_jets_p4.push_back(make_p4(*j))
         c_jets_csv.push_back(jets_csv[ij])
+        c_jets_jettype.push_back(f.RESOLVED)
 
     c_leps_p4 = CvectorLorentz()
     c_leps_charge = Cvectordouble()
@@ -38,8 +42,17 @@ for ev in events:
 
     c_loosejets_p4 = CvectorLorentz()
     c_loosejets_csv = Cvectordouble()
-    if jsev["event"]["cat"].startswith("sl"):
-        print "tthbb13 code blr=", jsev["event"]["blr"], "mem=", jsev["output"]["p_tth"], jsev["output"]["p_ttbb"], jsev["output"]["p"]
 
-        ret = f.GetOutput(c_leps_p4, c_leps_charge, c_jets_p4, c_jets_csv, c_loosejets_p4, c_loosejets_csv, met_p4)
+    print "tthbb13 code blr=", jsev["event"]["blr"], "mem=", jsev["output"]["p_tth"], jsev["output"]["p_ttbb"], jsev["output"]["p"]
+    if jsev["event"]["cat"].startswith("dl"):
+        print "DL_0w2h2t"
+        ret = f.GetOutput(f.DL_0W2H2T, c_leps_p4, c_leps_charge, c_jets_p4, c_jets_csv, c_jets_jettype, c_loosejets_p4, c_loosejets_csv, met_p4)
+        print "mem.py blr=", ret.blr_4b/(ret.blr_4b + ret.blr_2b), "mem=", ret.p_sig, ret.p_bkg, ret.p
+    elif jsev["event"]["cat"].startswith("sl_jge6"):
+        print "SL_2w2h2t"
+        ret = f.GetOutput(f.SL_2W2H2T, c_leps_p4, c_leps_charge, c_jets_p4, c_jets_csv, c_jets_jettype, c_loosejets_p4, c_loosejets_csv, met_p4)
+        print "mem.py blr=", ret.blr_4b/(ret.blr_4b + ret.blr_2b), "mem=", ret.p_sig, ret.p_bkg, ret.p
+    elif jsev["event"]["cat"].startswith("sl"):
+        print "SL_0w2h2t"
+        ret = f.GetOutput(f.SL_0W2H2T, c_leps_p4, c_leps_charge, c_jets_p4, c_jets_csv, c_jets_jettype, c_loosejets_p4, c_loosejets_csv, met_p4)
         print "mem.py blr=", ret.blr_4b/(ret.blr_4b + ret.blr_2b), "mem=", ret.p_sig, ret.p_bkg, ret.p
