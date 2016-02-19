@@ -2,7 +2,7 @@
 
 using namespace std;
 
-BDTClassifier::BDTClassifier (string weightpath):btagMcut(0.89){
+BDTClassifier::BDTClassifier (string weightpath):btagMcut(0.8){
     if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/bdtweights_v5/";
     
     // ==================================================
