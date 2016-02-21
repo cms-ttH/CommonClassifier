@@ -746,7 +746,7 @@ MEMClassifier::MEMClassifier() : cfg(MEM::MEMConfig()) {
     const string btagfile_path = (
         string("file://") +
         cmssw_path +
-        string("/src/TTH/CommonClassifier/data/ControlPlotsV14.root")
+        string("/src/TTH/CommonClassifier/data/btag_pdfs.root")
     ).c_str();
 
     cout << "opening " << transfers_path << endl;

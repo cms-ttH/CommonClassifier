@@ -159,6 +159,14 @@ class MEMClassifier {
     // returns the category of the last evaluated Event
     std::string GetCategoryOfLastEvaluation() const;
 
+    double GetBTagLikelihoodRatio(
+        const std::vector<TLorentzVector>& selectedJetP4,
+        const std::vector<double>& selectedJetCSV,
+        std::vector<unsigned int>& out_best_perm,
+        double& out_P_4b,
+        double& out_P_2b
+    );
+
   private:
     //Holds the transfer functions
     TFile* transfers;
@@ -179,11 +187,11 @@ class MEMClassifier {
     TF1* getTransferFunction(const char* flavour, double eta) const;
     double GetJetBProbability(const char* flavour, double pt, double eta, double bdisc);
     MEM::JetProbability GetJetBProbabilities(const TLorentzVector& p4, double bdisc);
-    
     TH3D* GetBTagPDF(const char* flavour);
 
     long unsigned int numMaxJets = 8;
     long unsigned int numMaxJetsBLR = 8;
+
 };
 
 #endif
