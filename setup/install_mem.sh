@@ -8,6 +8,9 @@ if [ -e "${CMSSW_BASE}" ]; then
 
 	#get the MEM code
 	git clone https://github.com/bianchini/Code.git MEIntegratorStandalone
+	cd MEIntegratorStandalone
+	git checkout v0.1
+	cd -
 
 	#copy the OpenLoops ME libraries
 	cp $CMSSW_BASE/src/TTH/MEIntegratorStandalone/libs/*.so $CMSSW_BASE/lib/$SCRAM_ARCH/
