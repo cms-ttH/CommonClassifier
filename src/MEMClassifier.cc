@@ -594,8 +594,10 @@ MEMResult MEMClassifier::GetOutput(
     );
 
     MEM::MEMOutput res_sig;
+    res_sig.p=-999.9;
     MEM::MEMOutput res_bkg;
-
+    res_bkg.p=-999.9;
+    
     switch (hypo) {
 
     // DEBUG
