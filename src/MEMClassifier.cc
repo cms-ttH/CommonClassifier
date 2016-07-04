@@ -19,12 +19,13 @@ void MEMClassifier::setup_mem(
     integrand->next_event();
 
     integrand->set_cfg(cfg);
-    integrand->set_permutation_strategy
-    ({
-        MEM::Permutations::QQbarBBbarSymmetry,
-        MEM::Permutations::QUntagged,
-        MEM::Permutations::BTagged,
-    });
+    //FIXME: replace this with cfg 
+    //integrand->set_permutation_strategy
+    //({
+    //    MEM::Permutations::QQbarBBbarSymmetry,
+    //    MEM::Permutations::QUntagged,
+    //    MEM::Permutations::BTagged,
+    //});
 
     switch (hypo) {
 
@@ -452,11 +453,12 @@ MEMClassifier::MEMClassifier() {
         ,cfg
     );
     integrand->set_cfg(cfg);
-    integrand->set_permutation_strategy
-    ({MEM::Permutations::BTagged,
-      MEM::Permutations::QUntagged,
-      MEM::Permutations::QQbarBBbarSymmetry
-     });
+    //FIXME: 
+    //integrand->set_permutation_strategy
+    //({MEM::Permutations::BTagged,
+    //  MEM::Permutations::QUntagged,
+    //  MEM::Permutations::QQbarBBbarSymmetry
+    // });
 
     blr = new MEM::JetLikelihood();
 
