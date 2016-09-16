@@ -57,6 +57,7 @@ public:
     int njets;
     int hypothesis;
     int numcalls;
+    int systematic;
     float met_pt;
     float met_phi;
     float leps_pt[2];
@@ -83,6 +84,7 @@ public:
         njets = DEF_VAL_INT;
         hypothesis = DEF_VAL_INT;
         numcalls = DEF_VAL_INT;
+        systematic = DEF_VAL_INT;
         met_pt = DEF_VAL_FLOAT;
         met_phi = DEF_VAL_FLOAT;
         SET_ZERO(leps_pt, 2, 0);
@@ -109,6 +111,7 @@ public:
         tree->Branch("njets", &njets, "njets/I");
         tree->Branch("hypothesis", &hypothesis, "hypothesis/I");
         tree->Branch("numcalls", &numcalls, "numcalls/I");
+        tree->Branch("systematic", &systematic, "systematic/I");
         tree->Branch("met_pt", &met_pt, "met_pt/F");
         tree->Branch("met_phi", &met_phi, "met_phi/F");
         tree->Branch("leps_pt", leps_pt, "leps_pt[nleps]/F");
@@ -136,6 +139,7 @@ public:
         tree->SetBranchAddress("njets", &njets);
         tree->SetBranchAddress("hypothesis", &hypothesis);
         tree->SetBranchAddress("numcalls", &numcalls);
+        tree->SetBranchAddress("systematic", &systematic);
         tree->SetBranchAddress("met_pt", &met_pt);
         tree->SetBranchAddress("met_phi", &met_phi);
         tree->SetBranchAddress("leps_pt", leps_pt);
