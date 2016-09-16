@@ -25,20 +25,19 @@ Usage
 * The BDTs are trained and optimized on odd-numbered Events, to avoid bias they should only be evaluated on even-numbered events (edm::Event.id().event()%2==0)
 * 
 
-# Common classifier data format
+# Running the CommonClassifier industrially
 
-As discussed, we will make a common gridding infrastructure to run the MEM on group-specific ntuples in a common way 
+As discussed, we will make a common infrastructure to run the MEM on group-specific ntuples in a common way on either a local cluster or the CMS grid (CRAB3). The following diagram explains the principle:
 ~~~
-
-ntuple chain:
+ntuplization chain:
 group ntuple -> CommonClassifier input ntuple -> CommonClassifier on the cluster/grid -> CommonClassifier output ntuple
 
 analysis of ntuples:
---------------------------------
-group-specific ntuple          |
-                               | -> histograms with BDT, MEM, ...
-CommonClassifier output ntuple | 
---------------------------------
+|--------------------------------|
+|    group-specific ntuple       |
+|     via (run, lumi, event)     | -> histograms with BDT, MEM, ...
+| CommonClassifier output ntuple | 
+|--------------------------------|
 ~~~
 
 Technically, the access of the CommonClassifier output ntuple from the histogramming code can be done using the `(run, lumi, event)` lookup database at https://github.com/kit-cn-cms/MEMDataBase
@@ -78,6 +77,8 @@ float met_phi
 ~~~
 
 An example tree can be found here: https://github.com/cms-ttH/CommonClassifier/blob/master/interface/intree.h, it's suggested to use this class in order to reduce errors from re-implementing this TTree.
+
+TODO: describe how the CommonClassifier input ntuple will be distributed so that it will be accessible via crab.
 
 ## CommonClassifier output ntuple
 
