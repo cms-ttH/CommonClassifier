@@ -39,11 +39,13 @@ group-specific ntuple          |
                                | -> histograms with BDT, MEM, ...
 CommonClassifier output ntuple | 
 --------------------------------
-
 ~~~
+
+Technically, the access of the CommonClassifier output ntuple from the histogramming code can be done using the `(run, lumi, event)` lookup database at https://github.com/kit-cn-cms/MEMDataBase
+
 ## CommonClassifier input ntuple
 
-A tree with exactly this structure:
+In order to run the CommonClassifier using the gridding infractructure, you must export your private ntuples to a TTree with exactly this structure:
 
 ~~~
 long run
@@ -75,4 +77,18 @@ float met_pt
 float met_phi
 ~~~
 
-An example tree can be found here: https://github.com/cms-ttH/CommonClassifier/blob/master/interface/intree.h
+An example tree can be found here: https://github.com/cms-ttH/CommonClassifier/blob/master/interface/intree.h, it's suggested to use this class in order to reduce errors from re-implementing this TTree.
+
+## CommonClassifier output ntuple
+
+The proposed structure would be the following:
+
+~~~
+long run
+long lumi
+long event
+int systematic
+int hypothesis
+double bdt
+double mem
+~~~
