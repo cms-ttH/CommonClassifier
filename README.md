@@ -27,7 +27,21 @@ Usage
 
 # Common classifier data format
 
-## Input data
+As discussed, we will make a common gridding infrastructure to run the MEM on group-specific ntuples in a common way 
+~~~
+
+ntuple chain:
+group ntuple -> CommonClassifier input ntuple -> CommonClassifier on the cluster/grid -> CommonClassifier output ntuple
+
+analysis of ntuples:
+--------------------------------
+group-specific ntuple          |
+                               | -> histograms with BDT, MEM, ...
+CommonClassifier output ntuple | 
+--------------------------------
+
+~~~
+## CommonClassifier input ntuple
 
 A tree with exactly this structure:
 
@@ -60,3 +74,5 @@ int jets_type[njets] //if jet is resolved, boosted
 float met_pt
 float met_phi
 ~~~
+
+An example tree can be found here: https://github.com/cms-ttH/CommonClassifier/blob/master/interface/intree.h
