@@ -77,16 +77,16 @@ public:
 
     //initializes all branch variables
     void loop_initialize(void) {        
-        run = DEF_VAL_LONG;
-        event = DEF_VAL_LONG;
-        lumi = DEF_VAL_LONG;
-        nleps = DEF_VAL_INT;
-        njets = DEF_VAL_INT;
-        hypothesis = DEF_VAL_INT;
-        numcalls = DEF_VAL_INT;
-        systematic = DEF_VAL_INT;
-        met_pt = DEF_VAL_FLOAT;
-        met_phi = DEF_VAL_FLOAT;
+        run = 0;
+        event = 0;
+        lumi = 0;
+        nleps = 0;
+        njets = 0;
+        hypothesis = 0;
+        numcalls = 0;
+        systematic = 0;
+        met_pt = 0;
+        met_phi = 0;
         SET_ZERO(leps_pt, 2, 0);
         SET_ZERO(leps_eta, 2, 0);
         SET_ZERO(leps_phi, 2, 0);
