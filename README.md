@@ -76,6 +76,27 @@ float met_pt
 float met_phi
 ~~~
 
+The TTree should be called `tree`:
+
+~~~
+[jpata@t3ui17 gc]$ root ~/tth/gc/CommonClassifierEvents/GCb65634721d2b/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pyt
+>root [0]
+Attaching file /mnt/t3nfs01/data01/shome/jpata/tth/gc/CommonClassifierEvents/GCb65634721d2b/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root as _file0...
+S(TFile *) 0x2657980
+root [1] tree->Scan()
+***********************************************************************************************************************
+*    Row   * Instance * systemati *     njets *    jet_pt *   jet_eta *   jet_phi *  jet_mass *   jet_csv *  jet_cmva *
+***********************************************************************************************************************
+*        0 *        0 *         0 *         6 * 177.14239 * -0.052165 * -2.828265 * 20.478263 * 0.9895136 * 0.9971207 *
+*        0 *        1 *         0 *         6 * 69.510925 * 0.7877875 * 0.3808440 * 7.2543778 * 0.0905931 * -0.857876 *
+*        0 *        2 *         0 *         6 * 66.424903 * 0.4279073 * 1.5178282 * 9.6658573 * 0.1186879 * -0.962871 *
+*        0 *        3 *         0 *         6 * 65.595512 * 0.0620128 * 1.1088844 * 8.2773714 * 0.1906057 * -0.966070 *
+*        0 *        4 *         0 *         6 * 55.845230 * -0.117159 * 2.4891586 * 7.1776804 * 0.9706692 * 0.9264151 *
+*        0 *        5 *         0 *         6 * 37.665302 * 1.4149088 * -0.584131 * 5.0920801 * 0.9466056 * 0.8015335 *
+*        1 *        0 *         0 *         6 * 288.93145 * -0.731546 * -2.582718 * 36.371589 * 0.9566396 * 0.9597303 *
+*        1 *        1 *
+~~~
+
 An example tree can be found here: https://github.com/cms-ttH/CommonClassifier/blob/master/interface/intree.h, it's suggested to use this class in order to reduce errors from re-implementing this TTree.
 
 TODO: describe how the CommonClassifier input ntuple will be distributed so that it will be accessible via crab.
