@@ -16,16 +16,8 @@ void MEMClassifier::setup_mem(
     MEMResult& res
 ) {
 
-    integrand->next_event();
-
     integrand->set_cfg(cfg);
-    //FIXME: replace this with cfg 
-    //integrand->set_permutation_strategy
-    //({
-    //    MEM::Permutations::QQbarBBbarSymmetry,
-    //    MEM::Permutations::QUntagged,
-    //    MEM::Permutations::BTagged,
-    //});
+    integrand->next_event();
 
     switch (hypo) {
 
@@ -271,18 +263,19 @@ MEMResult MEMClassifier::GetOutput(
     } else {
         throw std::runtime_error("Expected a single-lepton event or dilepton event");
     }
+    cout << "chose hypo=" << hypo << endl;
 
     return GetOutput(
-               hypo,
-               selectedLeptonP4,
-               selectedLeptonCharge,
-               selectedJetP4,
-               selectedJetCSV,
-               selectedJetType,
-               {},
-               {},
-               metP4
-           );
+        hypo,
+        selectedLeptonP4,
+        selectedLeptonCharge,
+        selectedJetP4,
+        selectedJetCSV,
+        selectedJetType,
+        {},
+        {},
+        metP4
+    );
 }
 
 
@@ -370,7 +363,7 @@ MEM::Object* MEMClassifier::make_jet(double pt, double eta, double phi, double m
     MEM::Object* obj = new MEM::Object(lv, MEM::ObjectType::Jet);
     obj->addObs( MEM::Observable::BTAG, istagged); // 0 - jet is assumed to be from a light quark, 1 - a b quark
     obj->addObs( MEM::Observable::CSV, csv); //b-tagger
-    obj->addObs( MEM::Observable::PDGID, 0);  // currently not used
+    //obj->addObs( MEM::Observable::PDGID, 0);  // NB: must NOT be specified!
     // attach the transfer functions corresponding to the jet
     if (is_subjet) {
         obj->addTransferFunction(MEM::TFType::bReco, getTransferFunction("sjb", lv.Eta()));
@@ -442,23 +435,14 @@ MEMClassifier::MEMClassifier() {
     cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_b, GetBTagPDF("b"));
     cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_c, GetBTagPDF("c"));
     cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_l, GetBTagPDF("l"));
+    cfg.perm_pruning.push_back(MEM::Permutations::BTagged);
+    cfg.perm_pruning.push_back(MEM::Permutations::QUntagged);
+    cfg.perm_pruning.push_back(MEM::Permutations::QQbarBBbarSymmetry);
 
     integrand = new MEM::Integrand(
-        MEM::DebugVerbosity::output
-        //|MEM::DebugVerbosity::init
-        //|MEM::DebugVerbosity::input
-        //|MEM::DebugVerbosity::init_more
-        //|MEM::DebugVerbosity::event
-        //|MEM::DebugVerbosity::integration
-        ,cfg
+        0,
+        cfg
     );
-    integrand->set_cfg(cfg);
-    //FIXME: 
-    //integrand->set_permutation_strategy
-    //({MEM::Permutations::BTagged,
-    //  MEM::Permutations::QUntagged,
-    //  MEM::Permutations::QQbarBBbarSymmetry
-    // });
 
     blr = new MEM::JetLikelihood();
 
