@@ -263,7 +263,6 @@ MEMResult MEMClassifier::GetOutput(
     } else {
         throw std::runtime_error("Expected a single-lepton event or dilepton event");
     }
-    cout << "chose hypo=" << hypo << endl;
 
     return GetOutput(
         hypo,
@@ -403,7 +402,7 @@ TF1* MEMClassifier::getTransferFunction(const char* flavour, double eta) const {
     return tf;
 }
 
-MEMClassifier::MEMClassifier() {
+MEMClassifier::MEMClassifier(int verbosity) {
 
     const string cmssw_path(std::getenv("CMSSW_BASE"));
 
@@ -440,13 +439,14 @@ MEMClassifier::MEMClassifier() {
     cfg.perm_pruning.push_back(MEM::Permutations::QQbarBBbarSymmetry);
 
     integrand = new MEM::Integrand(
-        0,
+        verbosity,
         cfg
     );
 
     blr = new MEM::JetLikelihood();
-
 }
+
+MEMClassifier::MEMClassifier( ) : MEMClassifier(0) {}
 
 TH3D* MEMClassifier::GetBTagPDF(const char* flavour) {
     assert(btagfile != nullptr);

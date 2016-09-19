@@ -62,6 +62,7 @@ public:
     };
 
     //The constructor loads the transfer functions and b-tag PDF-s
+    MEMClassifier(int verbosity);
     MEMClassifier();
     ~MEMClassifier();
 
