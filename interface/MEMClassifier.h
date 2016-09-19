@@ -53,7 +53,13 @@ public:
         BOOSTED_B
     };
 
-
+    enum Systematic {
+        NOMINAL,
+        JESUP,
+        JESDOWN,
+        JERUP,
+        JERDOWN
+    };
 
     //The constructor loads the transfer functions and b-tag PDF-s
     MEMClassifier();
