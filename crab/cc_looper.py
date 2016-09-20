@@ -7,22 +7,46 @@ Cvectordouble = getattr(ROOT, "std::vector<double>")
 CvectorJetType = getattr(ROOT, "std::vector<MEMClassifier::JetType>")
 
 def vec_from_list(vec_type, src):
+    """
+    Creates a std::vector<T> from a python list.
+    vec_type (ROOT type): vector datatype, ex: std::vector<double>
+    src (iterable): python list
+    """
     v = vec_type()
     for item in src:
         v.push_back(item)
     return v
 
-def main(infile_name, firstEvent, lastEvent, outfile_name):
+def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
+    """
+    Processes an input file with the CommonClassifier, saving the output in a file.
+    infile_name (string): path to input file, can be root://, file://, ...
+    firstEvent (int): first event to process (inclusive)
+    lastEvent (int): last event to process (exclusive)
+    outfile_name (string): output file name, must be writeable
+    conf (dict): configuration dictionary
+    """
     firstEvent = int(firstEvent)
     lastEvent = int(lastEvent)
 
-    cls = ROOT.MEMClassifier()
-    infile = ROOT.TFile.Open(infile_name)
-    tree = infile.Get("tree")
+    #create the MEM classifier, specifying the verbosity and b-tagger type
+    cls = ROOT.MEMClassifier(1, conf["btag"])
 
+    #one file
+    if isinstance(infile_name, basestring):
+        infile = ROOT.TFile.Open(infile_name)
+        tree = infile.Get("tree")
+    #many files
+    else:
+        tree = ROOT.TChain("tree")
+        for fi in infile_name:
+            tree.AddFile(fi)
+
+    #create the output
     outfile_name = outfile_name
     outfile = ROOT.TFile(outfile_name, "RECREATE")
 
+    #create the output TTree structure
     outtree = ROOT.TTree("tree", "CommonClassifier output tree")
     bufs = {}
     bufs["event"] = np.zeros(1, dtype=np.int64)
@@ -59,6 +83,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name):
         njets = tree.njets
         print "njets={0}".format(njets)
 
+        #process jets
         jets_p4 = CvectorLorentz()
         jets_pt = list(tree.jet_pt)
         jets_eta = list(tree.jet_eta)
@@ -69,8 +94,10 @@ def main(infile_name, firstEvent, lastEvent, outfile_name):
             v.SetPtEtaPhiM(jets_pt[iJet], jets_eta[iJet], jets_phi[iJet], jets_mass[iJet])
             jets_p4.push_back(v)
         jets_csv = vec_from_list(Cvectordouble, list(tree.jet_csv))
+        jets_cmva = vec_from_list(Cvectordouble, list(tree.jet_cmva))
         jets_type = vec_from_list(CvectorJetType, list(tree.jet_type))
-    
+   
+        #process leptons
         nleps = tree.nleps
         leps_p4 = CvectorLorentz()
         leps_pt = list(tree.lep_pt)
@@ -83,6 +110,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name):
             v.SetPtEtaPhiM(leps_pt[ilep], leps_eta[ilep], leps_phi[ilep], leps_mass[ilep])
             leps_p4.push_back(v)
     
+        #process MET
         met = ROOT.TLorentzVector()
         met.SetPtEtaPhiM(
             tree.met_pt,
@@ -90,15 +118,25 @@ def main(infile_name, firstEvent, lastEvent, outfile_name):
             tree.met_phi,
             0
         )
-        
+
+        #choose which b-tagger to use
+        jets_tagger = None
+        if conf["btag"] == "btagCSV_":
+            jets_tagger = jets_csv
+        elif conf["btag"] == "btagBDT_":
+            jets_tagger = jets_cmva
+       
+        #calculate the MEM
         ret = cls.GetOutput(
             leps_p4,
             leps_charge,
             jets_p4,
-            jets_csv,
+            jets_tagger,
             jets_type,
             met,
         )
+
+        #save the output
         bufs["mem_p"][0] = ret.p
         bufs["mem_p_sig"][0] = ret.p_sig
         bufs["mem_p_bkg"][0] = ret.p_bkg
@@ -110,12 +148,29 @@ def main(infile_name, firstEvent, lastEvent, outfile_name):
     outfile.Close()
 
 if __name__ == "__main__":
+
+    #configurations go here
+    confs = {
+        "CSV": {
+            "btag": "btagCSV_",
+        },
+        "CMVA": {
+            "btag": "btagBDT_",
+        },
+    }
+
     import argparse
     parser = argparse.ArgumentParser(description='Calculates the CommonClassifier on a common input ntuple')
-    parser.add_argument('--infile', action="store", help="Input file name (PFN)")
+    parser.add_argument('--infile', action="store", nargs='+', help="Input file name (PFN)")
     parser.add_argument('--firstEvent', action="store", help="first event (by index) in tree to use", type=int)
     parser.add_argument('--lastEvent', action="store", help="last event (by index) in tree to use, exclusive (!)", type=int)
+    parser.add_argument('--maxEvents', action="store", help="total number of events to process", type=int, required=False)
     parser.add_argument('--outfile', action="store", help="output file name, must be writeable")
-
+    parser.add_argument('--conf', type=str, choices=sorted(confs.keys()), default="CSV")
     args = parser.parse_args()
-    main(args.infile, args.firstEvent, args.lastEvent, args.outfile)
+    conf = confs[args.conf]
+
+    #use maxEvents if it was specified
+    if not args.maxEvents is None:
+        args.lastEvent = args.firstEvent + args.maxEvents
+    main(args.infile, args.firstEvent, args.lastEvent, args.outfile, conf)

@@ -14,7 +14,7 @@ def submit(config):
 samples = [
     Sample(
         name = "tth",
-        filename="samples/eth/tth.txt"
+        filename="samples/eth/tth.txt",
     ),
     Sample(
         name = "ttjets",
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         cfg = config()
         
         cfg.section_("General")
-        cfg.General.requestName = 'MEM_{0}_{1}'.format(sample.name, args.tag)
+        cfg.General.requestName = 'MEM_{0}_{1}'.format(args.tag, sample.name)
         cfg.General.workArea = 'crab_projects'
         cfg.General.transferLogs = True
         
@@ -42,19 +42,21 @@ if __name__ == "__main__":
         cfg.JobType.psetName = 'PSet.py'
         cfg.JobType.scriptExe = 'wrapper.sh'
         cfg.JobType.sendPythonFolder = True
-        cfg.JobType.maxMemoryMB = 2000
+        cfg.JobType.maxMemoryMB = 1000
         cfg.JobType.inputFiles = [
             cfg.JobType.scriptExe,
             'mem.py',
             'cc_looper.py'
         ]
-        cfg.JobType.maxJobRuntimeMin = 240
+        #1 event is roughly 60 seconds (1 minute), one also needs a O(~30%) time buffer to catch overflows, so
+        # for 500 events 1.3 * 500 * 1 = 650
+        cfg.JobType.maxJobRuntimeMin = 650
         
         cfg.section_("Data")
         cfg.Data.inputDBS = 'global'
         cfg.Data.splitting = 'FileBased'
         cfg.Data.unitsPerJob = 1
-        cfg.Data.totalUnits = 10
+        cfg.Data.totalUnits = -1
         cfg.Data.userInputFiles = map(lambda x: x.strip(), open(sample.filename).readlines())
         cfg.Data.allowNonValidInputDataset = True # to run on datasets in PRODUCTION
         cfg.Data.outLFNDirBase = '/store/user/{0}/mem/'.format(args.user)

@@ -2,7 +2,7 @@ from WMCore.Configuration import Configuration
 config = Configuration()
 
 config.section_("General")
-config.General.requestName = 'MEM_test_v22'
+config.General.requestName = 'MEM_test_Sep20_v1'
 config.General.workArea = 'crab_projects'
 config.General.transferLogs = True
 
@@ -24,7 +24,11 @@ config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 1
 config.Data.totalUnits = -1
-config.Data.userInputFiles = map(lambda x: x.strip(), open("tth.txt").readlines())
+config.Data.userInputFiles = [
+    "root://storage01.lcg.cscs.ch/pnfs/lcg.cscs.ch/cms/trivcat/store/user/jpata/mem/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root___0___4",
+    "root://storage01.lcg.cscs.ch/pnfs/lcg.cscs.ch/cms/trivcat/store/user/jpata/mem/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root___4___8",
+]
+
 config.Data.allowNonValidInputDataset = True # to run on datasets in PRODUCTION
 config.Data.outLFNDirBase = '/store/user/jpata/mem/'
 config.Data.publication = False

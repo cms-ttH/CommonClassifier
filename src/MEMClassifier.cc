@@ -91,6 +91,11 @@ void MEMClassifier::setup_mem_impl(
         selectedJetP4, selectedJetCSV, best_perm, blr_4b, blr_2b
     );
     assert(best_perm.size() >= 4);
+    cout << "best_perm = [";
+    for (auto ip : best_perm) {
+        cout << ip << " ";
+    }
+    cout << "]" << endl;
 
     res.blr_4b = blr_4b;
     res.blr_2b = blr_2b;
@@ -251,15 +256,19 @@ MEMResult MEMClassifier::GetOutput(
     if (nleps == 1) {
         if (njets >= 6) {
             hypo = SL_2W2H2T;
+            cout << "njets=" << njets << " nleps=" << nleps << " chose hypo SL_2w2h2t" << endl;
         }
         else if (njets == 5) {
             hypo = SL_1W2H2T;
+            cout << "njets=" << njets << " nleps=" << nleps << " chose hypo SL_1w2h2t" << endl;
         }
         else if (njets == 4) {
             hypo = SL_0W2H2T;
+            cout << "njets=" << njets << " nleps=" << nleps << " chose hypo SL_0w2h2t" << endl;
         }
     } else if (nleps == 2) {
         hypo = DL_0W2H2T;
+            cout << "njets=" << njets << " nleps=" << nleps << " chose hypo DL_0w2h2t" << endl;
     } else {
         throw std::runtime_error("Expected a single-lepton event or dilepton event");
     }
@@ -402,7 +411,7 @@ TF1* MEMClassifier::getTransferFunction(const char* flavour, double eta) const {
     return tf;
 }
 
-MEMClassifier::MEMClassifier(int verbosity) {
+MEMClassifier::MEMClassifier(int verbosity, const char* _btag_prefix) : btag_prefix(_btag_prefix) {
 
     const string cmssw_path(std::getenv("CMSSW_BASE"));
 
@@ -431,9 +440,9 @@ MEMClassifier::MEMClassifier(int verbosity) {
     cfg.set_tf_global(MEM::TFType::bLost, 1, getTransferFunction("beff", 2.0));
     cfg.set_tf_global(MEM::TFType::qLost, 0, getTransferFunction("leff", 0.0));
     cfg.set_tf_global(MEM::TFType::qLost, 1, getTransferFunction("leff", 2.0));
-    cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_b, GetBTagPDF("b"));
-    cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_c, GetBTagPDF("c"));
-    cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_l, GetBTagPDF("l"));
+    cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_b, GetBTagPDF(this->btag_prefix, "b"));
+    cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_c, GetBTagPDF(this->btag_prefix, "c"));
+    cfg.add_distribution_global(MEM::DistributionType::DistributionType::csv_l, GetBTagPDF(this->btag_prefix, "l"));
     cfg.perm_pruning.push_back(MEM::Permutations::BTagged);
     cfg.perm_pruning.push_back(MEM::Permutations::QUntagged);
     cfg.perm_pruning.push_back(MEM::Permutations::QQbarBBbarSymmetry);
@@ -446,18 +455,18 @@ MEMClassifier::MEMClassifier(int verbosity) {
     blr = new MEM::JetLikelihood();
 }
 
-MEMClassifier::MEMClassifier( ) : MEMClassifier(0) {}
+MEMClassifier::MEMClassifier( ) : MEMClassifier(0, "btagCSV_") {}
 
-TH3D* MEMClassifier::GetBTagPDF(const char* flavour) {
+TH3D* MEMClassifier::GetBTagPDF(const char* prefix, const char* flavour) {
     assert(btagfile != nullptr);
     TH3D* ret = nullptr;
-    ret = (TH3D*)(btagfile->Get((string("btagCSV_")+string(flavour)+string("_pt_eta")).c_str()));
+    ret = (TH3D*)(btagfile->Get((string(prefix)+string(flavour)+string("_pt_eta")).c_str()));
     assert(ret != nullptr);
     return ret;
 }
 
-double MEMClassifier::GetJetBProbability(const char* flavour, double pt, double eta, double bdisc) {
-    TH3D* h = GetBTagPDF(flavour);
+double MEMClassifier::GetJetBProbability(const char* prefix, const char* flavour, double pt, double eta, double bdisc) {
+    TH3D* h = GetBTagPDF(prefix, flavour);
     int i = h->FindBin(pt, std::abs(eta), bdisc);
     return h->GetBinContent(i);
 }
@@ -466,9 +475,9 @@ MEM::JetProbability MEMClassifier::GetJetBProbabilities(
     const TLorentzVector& p4, double bdisc
 ) {
     MEM::JetProbability jp;
-    jp.setProbability(MEM::JetInterpretation::b, GetJetBProbability("b", p4.Pt(), p4.Eta(), bdisc));
-    jp.setProbability(MEM::JetInterpretation::c, GetJetBProbability("c", p4.Pt(), p4.Eta(), bdisc));
-    jp.setProbability(MEM::JetInterpretation::l, GetJetBProbability("l", p4.Pt(), p4.Eta(), bdisc));
+    jp.setProbability(MEM::JetInterpretation::b, GetJetBProbability(this->btag_prefix, "b", p4.Pt(), p4.Eta(), bdisc));
+    jp.setProbability(MEM::JetInterpretation::c, GetJetBProbability(this->btag_prefix, "c", p4.Pt(), p4.Eta(), bdisc));
+    jp.setProbability(MEM::JetInterpretation::l, GetJetBProbability(this->btag_prefix, "l", p4.Pt(), p4.Eta(), bdisc));
     return jp;
 }
 

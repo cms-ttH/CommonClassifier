@@ -62,7 +62,7 @@ public:
     };
 
     //The constructor loads the transfer functions and b-tag PDF-s
-    MEMClassifier(int verbosity);
+    MEMClassifier(int verbosity, const char* _btag_prefix);
     MEMClassifier();
     ~MEMClassifier();
 
@@ -153,7 +153,7 @@ private:
 
     // Returns the transfer function corresponding to a jet flavour and eta
     TF1* getTransferFunction(const char* flavour, double eta) const;
-    double GetJetBProbability(const char* flavour, double pt, double eta, double bdisc);
+    double GetJetBProbability(const char* prefix, const char* flavour, double pt, double eta, double bdisc);
     MEM::JetProbability GetJetBProbabilities(const TLorentzVector& p4, double bdisc);
     double GetBTagLikelihoodRatio(
         const std::vector<TLorentzVector>& selectedJetP4,
@@ -162,10 +162,11 @@ private:
         double& out_P_4b,
         double& out_P_2b
     );
-    TH3D* GetBTagPDF(const char* flavour);
+    TH3D* GetBTagPDF(const char* prefix, const char* flavour);
 
     long unsigned int numMaxJets = 8;
     long unsigned int numMaxJetsBLR = 8;
+    const char* btag_prefix;
 };
 
 #endif

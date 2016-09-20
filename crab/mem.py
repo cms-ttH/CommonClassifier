@@ -2,14 +2,16 @@ print "running mem.py"
 import PSet
 import numpy as np
 from cc_looper import main
+import os
 
 infile_pattern = PSet.process.source.fileNames[0]
 outfile_name = PSet.process.output.fileName.value()
 infile_name, firstEvent, lastEvent = infile_pattern.split("___")
+os.system("xrdcp {0} infile.root".format(infile_name))
 firstEvent = int(firstEvent)
 lastEvent = int(lastEvent)
 
-main(infile_name, firstEvent, lastEvent, outfile_name)
+main("infile.root", firstEvent, lastEvent, outfile_name)
 print "loop done"
 
 infile_lfn = infile_name[infile_name.index("/store"):]
