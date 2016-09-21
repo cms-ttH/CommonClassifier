@@ -2,20 +2,36 @@ import ROOT, sys
 
 class ClassifierDB:
     def __init__(self, *args, **kwargs):
-        self.tfile = ROOT.TFile.Open(kwargs.get("filename"))
-        self.tree = self.tfile.Get("tree")
+        fn = kwargs.get("filename")
         self.data = {}
 
-        for ev in self.tree:
-            evt = ev.event
-            run = ev.run
-            lumi = ev.lumi
+        if len(fn)>0:
+            self.tfile = ROOT.TFile.Open(fn)
+            self.tree = self.tfile.Get("tree")
 
-            self.data[(run, lumi, evt)] = ev.mem
+            for ev in self.tree:
+                run = ev.run
+                evt = ev.event
+                lumi = ev.lumi
+                syst = ev.systematic
 
+                self.data[(int(run), int(lumi), int(evt), int(syst))] = ev.mem_p
+            self.tfile.Close()
+            
+        print "ClassifierDB initialized from file={0} with len(k)={1} keys".format(
+            fn,
+            len(self.data)
+        )
+        
+        print "first few keys are", sorted(self.data.keys())[:5]
 
     def __getitem__(self, key):
         return self.data[key]
+    
+    def get(self, key, default=0):
+        if self.data.has_key(key):
+            return self.data[key]
+        return default
 
 if __name__ == "__main__":
     cls = ClassifierDB(filename=sys.argv[1])

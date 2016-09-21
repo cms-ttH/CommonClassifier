@@ -11,7 +11,11 @@ os.system("xrdcp {0} infile.root".format(infile_name))
 firstEvent = int(firstEvent)
 lastEvent = int(lastEvent)
 
-main("infile.root", firstEvent, lastEvent, outfile_name)
+conf = {
+    "btag": "btagCSV_",
+}
+
+main("infile.root", firstEvent, lastEvent, outfile_name, conf)
 print "loop done"
 
 infile_lfn = infile_name[infile_name.index("/store"):]

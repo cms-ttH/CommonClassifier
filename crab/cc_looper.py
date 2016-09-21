@@ -30,7 +30,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     lastEvent = int(lastEvent)
 
     #create the MEM classifier, specifying the verbosity and b-tagger type
-    cls = ROOT.MEMClassifier(1, conf["btag"])
+    cls_mem = ROOT.MEMClassifier(1, conf["btag"])
+    cls_bdt = ROOT.BDTClassifier()
 
     #one file
     if isinstance(infile_name, basestring):
@@ -58,6 +59,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     bufs["mem_p_bkg"] = np.zeros(1, dtype=np.float64)
     bufs["blr_4b"] = np.zeros(1, dtype=np.float64)
     bufs["blr_2b"] = np.zeros(1, dtype=np.float64)
+    bufs["bdt"] = np.zeros(1, dtype=np.float64)
     
     outtree.Branch("event", bufs["event"], "event/L")
     outtree.Branch("run", bufs["run"], "run/L")
@@ -70,6 +72,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     
     outtree.Branch("blr_4b", bufs["blr_4b"], "blr_4b/D")
     outtree.Branch("blr_2b", bufs["blr_2b"], "blr_2b/D")
+    outtree.Branch("bdt", bufs["bdt"], "bdt/D")
 
     print "looping over events {0} to {1}".format(firstEvent, lastEvent)
     for iEv in range(firstEvent, lastEvent):
@@ -127,7 +130,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
             jets_tagger = jets_cmva
        
         #calculate the MEM
-        ret = cls.GetOutput(
+        ret = cls_mem.GetOutput(
             leps_p4,
             leps_charge,
             jets_p4,
@@ -142,6 +145,19 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         bufs["mem_p_bkg"][0] = ret.p_bkg
         bufs["blr_4b"][0] = ret.blr_4b
         bufs["blr_2b"][0] = ret.blr_2b
+       
+        loose_jets_p4 = jets_p4
+        loose_jets_csv = jets_csv
+
+        ret_bdt = cls_bdt.GetBDTOutput(
+            leps_p4,
+            jets_p4,
+            jets_csv,
+            loose_jets_p4,
+            loose_jets_csv,
+            met,
+        )
+        bufs["bdt"][0] = ret_bdt
         outtree.Fill()
     
     outfile.Write()

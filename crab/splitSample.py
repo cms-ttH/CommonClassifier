@@ -18,5 +18,5 @@ def genSplitting(infile, perjob, outfile):
 
 if __name__ == "__main__":
     pref = "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem"
-    genSplitting(pref + "/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root", 500, "tth.txt")
-    genSplitting(pref + "/Sep14_leptonic_nome_v1__TT_TuneCUETP8M1_13TeV-powheg-pythia8.root", 500, "ttjets.txt")
+    genSplitting(pref + "/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root", 300, "tth.txt")
+    genSplitting(pref + "/Sep14_leptonic_nome_v1__TT_TuneCUETP8M1_13TeV-powheg-pythia8.root", 300, "ttjets.txt")
