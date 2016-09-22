@@ -56,21 +56,21 @@ int numcalls //MEM integration points
 
 int nleps //varying number of leptons
 //the following arrays should be of varying length, with buffer sizes of 2 
-float leps_pt[nleps]
-float leps_eta[nleps]
-float leps_phi[nleps]
-float leps_mass[nleps]
-float leps_charge[nleps]
+float lep_pt[nleps]
+float lep_eta[nleps]
+float lep_phi[nleps]
+float lep_mass[nleps]
+float lep_charge[nleps]
 
 int njets //varying number of jets
 //the following arrays should be of varying length, with buffer sizes of 10
-float jets_pt[njets]
-float jets_eta[njets]
-float jets_phi[njets]
-float jets_mass[njets]
-float jets_csv[njets]
-float jets_cmva[njets]
-int jets_type[njets] //if jet is resolved, boosted
+float jet_pt[njets]
+float jet_eta[njets]
+float jet_phi[njets]
+float jet_mass[njets]
+float jet_csv[njets]
+float jet_cmva[njets]
+int jet_type[njets] //if jet is resolved, boosted
 
 float met_pt
 float met_phi

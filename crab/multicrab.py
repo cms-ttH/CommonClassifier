@@ -13,12 +13,24 @@ def submit(config):
 
 samples = [
     Sample(
-        name = "tth",
-        filename="samples/eth/tth.txt",
+        name = "ttH_hbb",
+        filename="samples/eth/ttH_hbb.txt",
     ),
     Sample(
-        name = "ttjets",
-        filename="samples/eth/ttjets.txt"
+        name = "ttH_nonhbb",
+        filename="samples/eth/ttH_nonhbb.txt",
+    ),
+    Sample(
+        name = "ttjetsUnsplit",
+        filename="samples/eth/ttjetsUnsplit.txt"
+    ),
+    Sample(
+        name = "ttjets_sl_t",
+        filename="samples/eth/ttjets_sl_t.txt"
+    ),
+    Sample(
+        name = "ttjets_sl_tbar",
+        filename="samples/eth/ttjets_sl_tbar.txt"
     )
 ]
 

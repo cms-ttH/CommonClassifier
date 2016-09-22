@@ -1,0 +1,10 @@
+[data_ee]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/Sep14_leptonic_nome__DoubleEG.root = 9224
+[data_mm]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/Sep14_leptonic_nome__DoubleMuon.root = 10154
+[data_em]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/Sep14_leptonic_nome__MuonEG.root = 10161
+[data_e]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/Sep14_leptonic_nome__SingleElectron.root = 20275
+[data_m]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/Sep14_leptonic_nome__SingleMuon.root = 29166

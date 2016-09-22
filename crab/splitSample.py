@@ -14,9 +14,34 @@ def genSplitting(infile, perjob, outfile):
         of.write("{0}___{1}___{2}\n".format(infile, chunk[0], chunk[-1]))
     of.close()
     fi.Close()
-
+    return nevents
 
 if __name__ == "__main__":
-    pref = "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem"
-    genSplitting(pref + "/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root", 300, "tth.txt")
-    genSplitting(pref + "/Sep14_leptonic_nome_v1__TT_TuneCUETP8M1_13TeV-powheg-pythia8.root", 300, "ttjets.txt")
+    pref = "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/"
+    
+    samples = [
+        ("data_ee", "Sep14_leptonic_nome__DoubleEG.root"),
+        ("data_mm", "Sep14_leptonic_nome__DoubleMuon.root"),
+        ("data_em", "Sep14_leptonic_nome__MuonEG.root"),
+        ("data_e", "Sep14_leptonic_nome__SingleElectron.root"),
+        ("data_m", "Sep14_leptonic_nome__SingleMuon.root"),
+        ("ttjets_sl_t", "Sep14_leptonic_nome__TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root"),
+        ("ttjets_sl_tbar", "Sep14_leptonic_nome__TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root"),
+        ("ttjetsUnsplit", "Sep14_leptonic_nome__TT_TuneCUETP8M1_13TeV-powheg-pythia8.root"),
+        ("ttH_nonhbb", "Sep14_leptonic_nome__ttHToNonbb_M125_13TeV_powheg_pythia8.root"),
+        ("ttH_hbb", "Sep14_leptonic_nome__ttHTobb_M125_13TeV_powheg_pythia8.root"),
+    ]
+   
+    samples_events = []
+    for name, samp in samples:
+        samples_events += [(
+            name,
+            pref + samp,
+            genSplitting(pref + samp, 300, "samples/eth/{0}.txt".format(name))
+        )]
+
+    sample_file = open("samples.dat", "w")
+    for name, path, nevents in samples_events:
+        sample_file.write("[{0}]\n".format(name))
+        sample_file.write("{0} = {1}\n".format(path, nevents))
+    sample_file.close()

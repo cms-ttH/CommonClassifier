@@ -31,7 +31,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
 
     #create the MEM classifier, specifying the verbosity and b-tagger type
     cls_mem = ROOT.MEMClassifier(1, conf["btag"])
-    cls_bdt = ROOT.BDTClassifier()
+    cls_bdt = ROOT.BlrBDTClassifier()
 
     #one file
     if isinstance(infile_name, basestring):
@@ -156,6 +156,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
             loose_jets_p4,
             loose_jets_csv,
             met,
+            ret.blr_4b/(ret.blr_4b+ret.blr_2b)
         )
         bufs["bdt"][0] = ret_bdt
         outtree.Fill()
