@@ -22,7 +22,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     Processes an input file with the CommonClassifier, saving the output in a file.
     infile_name (string): path to input file, can be root://, file://, ...
     firstEvent (int): first event to process (inclusive)
-    lastEvent (int): last event to process (exclusive)
+    lastEvent (int): last event to process (inclusive)
     outfile_name (string): output file name, must be writeable
     conf (dict): configuration dictionary
     """
@@ -74,8 +74,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     outtree.Branch("blr_2b", bufs["blr_2b"], "blr_2b/D")
     outtree.Branch("bdt", bufs["bdt"], "bdt/D")
 
-    print "looping over events {0} to {1}".format(firstEvent, lastEvent)
-    for iEv in range(firstEvent, lastEvent):
+    print "looping over event range [{0}, {1}]".format(firstEvent, lastEvent)
+    for iEv in range(firstEvent, lastEvent+1):
         tree.GetEntry(iEv)
         
         bufs["event"][0] = tree.event
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Calculates the CommonClassifier on a common input ntuple')
     parser.add_argument('--infile', action="store", nargs='+', help="Input file name (PFN)")
     parser.add_argument('--firstEvent', action="store", help="first event (by index) in tree to use", type=int)
-    parser.add_argument('--lastEvent', action="store", help="last event (by index) in tree to use, exclusive (!)", type=int)
+    parser.add_argument('--lastEvent', action="store", help="last event (by index) in tree to use, inclusive (!)", type=int)
     parser.add_argument('--maxEvents', action="store", help="total number of events to process", type=int, required=False)
     parser.add_argument('--outfile', action="store", help="output file name, must be writeable")
     parser.add_argument('--conf', type=str, choices=sorted(confs.keys()), default="CSV")
