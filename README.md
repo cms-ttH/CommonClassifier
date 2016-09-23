@@ -50,9 +50,9 @@ In order to run the CommonClassifier using the gridding infractructure, you must
 long run
 long lumi
 long event
-int systematic //keep track of systematically variated events
-int hypothesis //MEM hypothesis type (e.g. 0 for SL, 1 for DL etc)
-int numcalls //MEM integration points
+int systematic //keep track of systematically variated events, according to enum MEMClassifier::Systematics
+int hypothesis //MEM hypothesis type (e.g. 0 for SL, 1 for DL etc), set to -1 now
+int numcalls //MEM integration points, set to -1 now
 
 int nleps //varying number of leptons
 //the following arrays should be of varying length, with buffer sizes of 2 
@@ -69,8 +69,17 @@ float jet_eta[njets]
 float jet_phi[njets]
 float jet_mass[njets]
 float jet_csv[njets]
-float jet_cmva[njets]
-int jet_type[njets] //if jet is resolved, boosted
+float jet_cmva[njets] // fill with -1 in case you don't have it
+int jet_type[njets] //if jet is resolved, boosted, according to MEMClassifier::JetType enum
+
+int nloose_jets //varying number of loose jets, i.e. jets with 20<pt<30 NOT in jets collection
+//the following arrays should be of varying length, with buffer sizes of 5
+float loose_jet_pt[njets]
+float loose_jet_eta[njets]
+float loose_jet_phi[njets]
+float loose_jet_mass[njets]
+float loose_jet_csv[njets]
+float loose_jet_cmva[njets] // fill with -1 in case you don't have it
 
 float met_pt
 float met_phi
