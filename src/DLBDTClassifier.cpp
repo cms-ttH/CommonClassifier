@@ -96,9 +96,9 @@ DLBDTClassifier::DLBDTClassifier (string weightpath):btagMcut(0.8){
     readerMap["cate0"]->AddVariable("mass_higgsLikeDijet", & variableMap["mass_higgsLikeDijet"]);
     readerMap["cate0"]->AddVariable("H0_jet", & variableMap["H0_jet"]);
     readerMap["cate0"]->AddVariable("mass_jet_tag_min_deltaR", & variableMap["mass_jet_tag_min_deltaR"]);
+    readerMap["cate0"]->AddVariable("HT_tags", & variableMap["HT_tags"]);
     
     // cate1 3j3t
-    readerMap["cate1"]->AddVariable("btagDiscriminatorAverage_tagged", & variableMap["btagDiscriminatorAverage_tagged"]);
     readerMap["cate1"]->AddVariable("pT_tag_tag_min_deltaR", & variableMap["pT_tag_tag_min_deltaR"]);
     readerMap["cate1"]->AddVariable("avgDeltaR_tag_tag", & variableMap["avgDeltaR_tag_tag"]);
     readerMap["cate1"]->AddVariable("mass_jet_tag_min_deltaR", & variableMap["mass_jet_tag_min_deltaR"]);
