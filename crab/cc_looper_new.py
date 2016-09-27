@@ -18,7 +18,7 @@ def vec_from_list(vec_type, src):
         v.push_back(item)
     return v
 
-def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
+def main(infile_name, firstEvent, lastEvent, outfile_name, conf, use_mem):
     """
     Processes an input file with the CommonClassifier, saving the output in a file.
     infile_name (string): path to input file, can be root://, file://, ...
@@ -27,7 +27,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     outfile_name (string): output file name, must be writeable
     conf (dict): configuration dictionary
     """
-    use_mem=False
+    #use_mem=False
     firstEvent = int(firstEvent)
     lastEvent = int(lastEvent)
 
@@ -213,10 +213,11 @@ if __name__ == "__main__":
     parser.add_argument('--maxEvents', action="store", help="total number of events to process", type=int, required=False)
     parser.add_argument('--outfile', action="store", help="output file name, must be writeable")
     parser.add_argument('--conf', type=str, choices=sorted(confs.keys()), default="CSV")
+    parser.add_argument('--doMem', action='store_true',default=False, help="if you want the MEM to be caluculated, add --doMem")
     args = parser.parse_args()
     conf = confs[args.conf]
 
     #use maxEvents if it was specified
     if not args.maxEvents is None:
         args.lastEvent = args.firstEvent + args.maxEvents
-    main(args.infile, args.firstEvent, args.lastEvent, args.outfile, conf)
+    main(args.infile, args.firstEvent, args.lastEvent, args.outfile, conf,args.doMem)
