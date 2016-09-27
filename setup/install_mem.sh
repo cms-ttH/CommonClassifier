@@ -10,7 +10,7 @@ if [ -e "${CMSSW_BASE}" ]; then
 	git clone https://github.com/jpata/Code.git MEIntegratorStandalone --branch v0.3
 
 	#copy the OpenLoops ME libraries
-	cp -R TTH/MEIntegratorStandalone/libs/* ../lib/$SCRAM_ARCH/
+	cp -R $CMSSW_BASE/src/TTH/MEIntegratorStandalone/libs/* $CMSSW_BASE/lib/$SCRAM_ARCH/
 
 	cd $CMSSW_BASE
 fi
