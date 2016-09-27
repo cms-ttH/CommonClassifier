@@ -174,7 +174,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
 	loose_jets_p4 = jets_p4
         loose_jets_csv = jets_csv
         
-        print eth_blr
+        #print eth_blr
 
         ret_bdt = cls_bdt.GetBDTOutput(
             leps_p4,
@@ -187,7 +187,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
             eth_blr
         )
         bufs["bdt"][0] = ret_bdt
-        print ret_bdt
+        #print ret_bdt
         outtree.Fill()
     
     outfile.Write()
