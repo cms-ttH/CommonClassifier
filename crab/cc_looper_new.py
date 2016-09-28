@@ -76,8 +76,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf, use_mem):
     
     outtree.Branch("blr_4b", bufs["blr_4b"], "blr_4b/D")
     outtree.Branch("blr_2b", bufs["blr_2b"], "blr_2b/D")
-    outtree.Branch("blr_eth", bufs["blr_eth"],"blr_eth")
-    outtree.Branch("blr_eth_transformed", bufs["blr_eth_transformed"],"blr_eth_transformed")
+    outtree.Branch("blr_eth", bufs["blr_eth"],"blr_eth/D")
+    outtree.Branch("blr_eth_transformed", bufs["blr_eth_transformed"],"blr_eth_transformed/D")
     outtree.Branch("bdt", bufs["bdt"], "bdt/D")
 
     print "looping over event range [{0}, {1}]".format(firstEvent, lastEvent)
