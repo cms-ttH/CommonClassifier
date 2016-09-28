@@ -17,7 +17,7 @@ def genSplitting(infile, perjob, outfile):
     return nevents
 
 if __name__ == "__main__":
-    pref = "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep22/"
+    pref = "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep26/"
     
     samples = [
         ("data_ee", "Sep14_leptonic_nome__DoubleEG.root"),
