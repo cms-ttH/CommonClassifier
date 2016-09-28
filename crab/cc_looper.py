@@ -31,7 +31,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
 
     #create the MEM classifier, specifying the verbosity and b-tagger type
     cls_mem = ROOT.MEMClassifier(1, conf["btag"])
-    cls_bdt = ROOT.BlrBDTClassifier()
+    cls_bdt_sl = ROOT.BlrBDTClassifier()
+    cls_bdt_dl = ROOT.DLBDTClassifier()
 
     #one file
     if isinstance(infile_name, basestring):
@@ -164,23 +165,35 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
             met,
         )
 
-        #save the output
-        bufs["mem_p"][0] = ret.p
-        bufs["mem_p_sig"][0] = ret.p_sig
-        bufs["mem_p_bkg"][0] = ret.p_bkg
-        bufs["blr_4b"][0] = ret.blr_4b
-        bufs["blr_2b"][0] = ret.blr_2b
-       
-        ret_bdt = cls_bdt.GetBDTOutput(
-            leps_p4,
-            jets_p4,
-            jets_csv,
-            loose_jets_p4,
-            loose_jets_csv,
-            met,
-            ret.blr_4b/(ret.blr_4b+ret.blr_2b)
-        )
-        bufs["bdt"][0] = ret_bdt
+        ##save the output
+        #bufs["mem_p"][0] = ret.p
+        #bufs["mem_p_sig"][0] = ret.p_sig
+        #bufs["mem_p_bkg"][0] = ret.p_bkg
+        #bufs["blr_4b"][0] = ret.blr_4b
+        #bufs["blr_2b"][0] = ret.blr_2b
+        bufs["bdt"][0] = 0
+
+        if len(leps_p4) == 1:
+            ret_bdt = cls_bdt_sl.GetBDTOutput(
+                leps_p4,
+                jets_p4,
+                jets_csv,
+                loose_jets_p4,
+                loose_jets_csv,
+                met,
+                ret.blr_4b/(ret.blr_4b+ret.blr_2b)
+            )
+            bufs["bdt"][0] = ret_bdt
+        elif len(leps_p4) == 2:
+            ret_bdt = cls_bdt_dl.GetBDTOutput(
+                leps_p4,
+                leps_charge,
+                jets_p4,
+                jets_csv,
+                met,
+            )
+            bufs["bdt"][0] = ret_bdt
+            print "DL bdt", ret_bdt
         print "CommonClassifier/cc_looper mem={0} bdt={1}".format(ret.p, ret_bdt)
         outtree.Fill()
     

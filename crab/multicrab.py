@@ -1,4 +1,4 @@
-import argparse
+import argparse, os
 from CRABAPI.RawCommand import crabCommand
 from CRABClient.UserUtilities import getUsernameFromSiteDB, config
 
@@ -11,35 +11,33 @@ def submit(config):
     res = crabCommand('submit', config = config)
     return res
 
-samples = [
-    Sample(
-        name = "ttH_hbb",
-        filename="samples/eth/ttH_hbb.txt",
-    ),
-    Sample(
-        name = "ttH_nonhbb",
-        filename="samples/eth/ttH_nonhbb.txt",
-    ),
-    Sample(
-        name = "ttjetsUnsplit",
-        filename="samples/eth/ttjetsUnsplit.txt"
-    ),
-    Sample(
-        name = "ttjets_sl_t",
-        filename="samples/eth/ttjets_sl_t.txt"
-    ),
-    Sample(
-        name = "ttjets_sl_tbar",
-        filename="samples/eth/ttjets_sl_tbar.txt"
-    )
-]
+def make_samples(target_dir):
+    files = os.listdir(target_dir)
+    files = filter(lambda x: x.endswith(".txt"), files)
+    samples = []
+    skipped = []
+    for fi in files:
+        path_fi = os.path.join(target_dir, fi)
+        lines = open(path_fi).readlines()
+        if len(lines) < 50:
+            skipped += [path_fi]
+            continue
+        samp = Sample(
+            name = fi.split(".")[0],
+            filename = path_fi
+        )
+        samples += [samp]
+    return samples, skipped
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Submits crab jobs')
+    parser.add_argument('--indir', action="store", help="path to samples", type=str, default="samples/eth")
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
     args = parser.parse_args()
+   
+    samples, skipped = make_samples(args.indir)
     
     for sample in samples:
         cfg = config()
@@ -82,3 +80,7 @@ if __name__ == "__main__":
         cfg.Data.ignoreLocality = True
                 
         submit(cfg)
+
+    print "skipped samples"
+    for skip in skipped:
+        print skip
