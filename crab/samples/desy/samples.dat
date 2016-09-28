@@ -1,0 +1,150 @@
+[dy50inf]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/dy50inf.root = 28
+[dy50inf_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/dy50inf_JERDOWN.root = 28
+[dy50inf_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/dy50inf_JERUP.root = 27
+[dy50inf_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/dy50inf_JESDOWN.root = 25
+[dy50inf_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/dy50inf_JESUP.root = 34
+[singleantitop_tw]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singleantitop_tw.root = 62
+[singleantitop_tw_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singleantitop_tw_JERDOWN.root = 61
+[singleantitop_tw_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singleantitop_tw_JERUP.root = 62
+[singleantitop_tw_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singleantitop_tw_JESDOWN.root = 57
+[singleantitop_tw_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singleantitop_tw_JESUP.root = 65
+[singletop_tw]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw.root = 76
+[singletop_tw_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JERDOWN.root = 76
+[singletop_tw_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JERUP.root = 77
+[singletop_tw_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JESDOWN.root = 70
+[singletop_tw_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JESUP.root = 80
+[ttbarH125tobbbar]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar.root = 26660
+[ttbarH125tobbbar_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JERDOWN.root = 26705
+[ttbarH125tobbbar_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JERUP.root = 26617
+[ttbarH125tobbbar_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JESDOWN.root = 25885
+[ttbarH125tobbbar_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JESUP.root = 27446
+[ttbarH125tononbbbar]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tononbbbar.root = 535
+[ttbarH125tononbbbar_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tononbbbar_JERDOWN.root = 537
+[ttbarH125tononbbbar_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tononbbbar_JERUP.root = 535
+[ttbarH125tononbbbar_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tononbbbar_JESDOWN.root = 514
+[ttbarH125tononbbbar_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tononbbbar_JESUP.root = 547
+[ttbarWjetstolnu]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu.root = 593
+[ttbarWjetstolnu_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERDOWN.root = 591
+[ttbarWjetstolnu_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERUP.root = 592
+[ttbarWjetstolnu_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JESDOWN.root = 570
+[ttbarWjetstolnu_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JESUP.root = 613
+[ttbarWjetstoqq]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq.root = 662
+[ttbarWjetstoqq_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JERDOWN.root = 666
+[ttbarWjetstoqq_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JERUP.root = 658
+[ttbarWjetstoqq_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JESDOWN.root = 641
+[ttbarWjetstoqq_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JESUP.root = 702
+[ttbarZtoqq]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq.root = 1771
+[ttbarZtoqq_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERDOWN.root = 1776
+[ttbarZtoqq_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root = 1771
+[ttbarZtoqq_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JESDOWN.root = 1717
+[ttbarZtoqq_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JESUP.root = 1824
+[ttbarbg_fromDilepton0]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromDilepton0.root = 151
+[ttbarbg_fromDilepton0_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromDilepton0_JERDOWN.root = 152
+[ttbarbg_fromDilepton0_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromDilepton0_JERUP.root = 151
+[ttbarbg_fromDilepton0_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromDilepton0_JESDOWN.root = 143
+[ttbarbg_fromDilepton0_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromDilepton0_JESUP.root = 163
+[ttbarbg_fromLjets]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromLjets.root = 53
+[ttbarbg_fromLjets_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromLjets_JERDOWN.root = 53
+[ttbarbg_fromLjets_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromLjets_JERUP.root = 53
+[ttbarbg_fromLjets_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromLjets_JESDOWN.root = 50
+[ttbarbg_fromLjets_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarbg_fromLjets_JESUP.root = 54
+[wtolnu]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wtolnu.root = 0
+[wtolnu_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wtolnu_JERDOWN.root = 0
+[wtolnu_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wtolnu_JERUP.root = 0
+[wtolnu_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wtolnu_JESDOWN.root = 0
+[wtolnu_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wtolnu_JESUP.root = 0
+[wwtoall]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wwtoall.root = 0
+[wwtoall_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wwtoall_JERDOWN.root = 0
+[wwtoall_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wwtoall_JERUP.root = 0
+[wwtoall_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wwtoall_JESDOWN.root = 0
+[wwtoall_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wwtoall_JESUP.root = 0
+[wztoall]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wztoall.root = 0
+[wztoall_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wztoall_JERDOWN.root = 0
+[wztoall_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wztoall_JERUP.root = 0
+[wztoall_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wztoall_JESDOWN.root = 0
+[wztoall_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/wztoall_JESUP.root = 0
+[zztoall]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall.root = 2
+[zztoall_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JERDOWN.root = 2
+[zztoall_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JERUP.root = 2
+[zztoall_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JESDOWN.root = 2
+[zztoall_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JESUP.root = 2
+[ttbarsignalplustau_fromDilepton0]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0.root = 143037
+[ttbarsignalplustau_fromDilepton0_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JERDOWN.root = 143091
+[ttbarsignalplustau_fromDilepton0_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JERUP.root = 142954
+[ttbarsignalplustau_fromDilepton0_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JESDOWN.root = 132330
+[ttbarsignalplustau_fromDilepton0_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JESUP.root = 154413

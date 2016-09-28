@@ -1,0 +1,3 @@
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JESDOWN.root___0___299
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JESDOWN.root___300___599
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstoqq_JESDOWN.root___600___640

@@ -1,0 +1,2 @@
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERDOWN.root___0___299
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERDOWN.root___300___590

@@ -1,0 +1,6 @@
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root___0___299
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root___300___599
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root___600___899
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root___900___1199
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root___1200___1499
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarZtoqq_JERUP.root___1500___1770
