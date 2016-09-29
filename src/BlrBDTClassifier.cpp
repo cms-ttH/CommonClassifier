@@ -3,7 +3,7 @@
 using namespace std;
 
 BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
-    if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/blrbdtweights_80X_V1/";
+    if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/blrbdtweights_80X_V2/";
     
     // ==================================================
     //init all variables potentially used in BDT set
@@ -45,6 +45,8 @@ BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
     variableMap["Evt_CSV_Average"]=-999.;
     variableMap["Evt_Deta_JetsAverage"]=-999.;
     variableMap["blr_transformed"]=-999.;
+    variableMap["Evt_M_MinDeltaRTaggedJets"]=-999.;
+    
 
     // ==================================================
     ///init readers for all categories
@@ -62,84 +64,75 @@ BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
     // 62
 //WIP
     readerMap["6j2t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
-    readerMap["6j2t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
-    readerMap["6j2t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
-    readerMap["6j2t"]->AddVariable("Mlb", &variableMap["Mlb"]);
-    readerMap["6j2t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
-    readerMap["6j2t"]->AddVariable("min_dr_tagged_jets", &variableMap["min_dr_tagged_jets"]);
-    readerMap["6j2t"]->AddVariable("second_jet_pt", &variableMap["second_jet_pt"]);
-    readerMap["6j2t"]->AddVariable("h1", &variableMap["h1"]);
-    readerMap["6j2t"]->AddVariable("maxeta_jet_tag", &variableMap["maxeta_jet_tag"]);
-    readerMap["6j2t"]->AddVariable("h0", &variableMap["h0"]);
-    readerMap["6j2t"]->AddVariable("fourth_jet_pt", &variableMap["fourth_jet_pt"]);
+    readerMap["6j2t"]->AddVariable("Evt_M_MinDeltaRTaggedJets", &variableMap["Evt_M_MinDeltaRTaggedJets"]);
+    readerMap["6j2t"]->AddVariable("h2", &variableMap["h2"]);
     readerMap["6j2t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
+    readerMap["6j2t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
+    readerMap["6j2t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
+    readerMap["6j2t"]->AddVariable("h1", &variableMap["h1"]);
+    readerMap["6j2t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
+    readerMap["6j2t"]->AddVariable("Mlb", &variableMap["Mlb"]);
+    readerMap["6j2t"]->AddVariable("maxeta_tag_tag", &variableMap["maxeta_tag_tag"]);
 
     // 43
+        readerMap["4j3t"]->AddVariable("HT", &variableMap["HT"]);
+        readerMap["4j3t"]->AddVariable("third_highest_btag", &variableMap["third_highest_btag"]);
+        readerMap["4j3t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
     readerMap["4j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
-    readerMap["4j3t"]->AddVariable("M3", &variableMap["M3"]);
+        readerMap["4j3t"]->AddVariable("h1", &variableMap["h1"]);
     readerMap["4j3t"]->AddVariable("sphericity", &variableMap["sphericity"]);
-    readerMap["4j3t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
-    readerMap["4j3t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
-    readerMap["4j3t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
-    readerMap["4j3t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
-    readerMap["4j3t"]->AddVariable("min_dr_tagged_jets", &variableMap["min_dr_tagged_jets"]);
-    readerMap["4j3t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
-    readerMap["4j3t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
-    readerMap["4j3t"]->AddVariable("second_jet_pt", &variableMap["second_jet_pt"]);
-    readerMap["4j3t"]->AddVariable("Evt_CSV_Average", &variableMap["Evt_CSV_Average"]);
+    readerMap["4j3t"]->AddVariable("fourth_jet_pt", &variableMap["fourth_jet_pt"]);
 
     // 53
-    readerMap["5j3t"]->AddVariable("fourth_jet_pt", &variableMap["fourth_jet_pt"]);
-    readerMap["5j3t"]->AddVariable("h1", &variableMap["h1"]);
-    readerMap["5j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
+        readerMap["5j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
     readerMap["5j3t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
-    readerMap["5j3t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
-    readerMap["5j3t"]->AddVariable("M3", &variableMap["M3"]);
-    readerMap["5j3t"]->AddVariable("avg_dr_tagged_jets", &variableMap["avg_dr_tagged_jets"]);
-    readerMap["5j3t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
-    readerMap["5j3t"]->AddVariable("invariant_mass_of_everything", &variableMap["invariant_mass_of_everything"]);
-    readerMap["5j3t"]->AddVariable("fifth_highest_CSV", &variableMap["fifth_highest_CSV"]);
+    readerMap["5j3t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
     readerMap["5j3t"]->AddVariable("h2", &variableMap["h2"]);
+    readerMap["5j3t"]->AddVariable("sphericity", &variableMap["sphericity"]);
+    readerMap["5j3t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
+    readerMap["5j3t"]->AddVariable("avg_dr_tagged_jets", &variableMap["avg_dr_tagged_jets"]);
+    readerMap["5j3t"]->AddVariable("third_jet_pt", &variableMap["third_jet_pt"]);
+    readerMap["5j3t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
+    readerMap["5j3t"]->AddVariable("maxeta_tag_tag", &variableMap["maxeta_tag_tag"]);
 
     // 63
-    readerMap["6j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
-    readerMap["6j3t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
-    readerMap["6j3t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
+        readerMap["6j3t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
     readerMap["6j3t"]->AddVariable("dEta_fn", &variableMap["dEta_fn"]);
-    readerMap["6j3t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
-    readerMap["6j3t"]->AddVariable("avg_dr_tagged_jets", &variableMap["avg_dr_tagged_jets"]);
-    readerMap["6j3t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
-    readerMap["6j3t"]->AddVariable("tagged_dijet_mass_closest_to_125", &variableMap["tagged_dijet_mass_closest_to_125"]);
+    readerMap["6j3t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
+    readerMap["6j3t"]->AddVariable("min_dr_tagged_jets", &variableMap["min_dr_tagged_jets"]);
     readerMap["6j3t"]->AddVariable("dev_from_avg_disc_btags", &variableMap["dev_from_avg_disc_btags"]);
+    readerMap["6j3t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
+    readerMap["6j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
 
     // 44
-    readerMap["4j4t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
-    readerMap["4j4t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
+        readerMap["4j4t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
     readerMap["4j4t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
-    readerMap["4j4t"]->AddVariable("M3", &variableMap["M3"]);
-    readerMap["4j4t"]->AddVariable("fourth_jet_pt", &variableMap["fourth_jet_pt"]);
     readerMap["4j4t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
+    readerMap["4j4t"]->AddVariable("h3", &variableMap["h3"]);
+    readerMap["4j4t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
     readerMap["4j4t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
-    readerMap["4j4t"]->AddVariable("third_highest_btag", &variableMap["third_highest_btag"]);
+    readerMap["4j4t"]->AddVariable("maxeta_jet_jet", &variableMap["maxeta_jet_jet"]);
+    readerMap["4j4t"]->AddVariable("HT", &variableMap["HT"]);
 
     // 54
-    readerMap["5j4t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
-    readerMap["5j4t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
-    readerMap["5j4t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
-    readerMap["5j4t"]->AddVariable("avg_dr_tagged_jets", &variableMap["avg_dr_tagged_jets"]);
+        readerMap["5j4t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
+    readerMap["5j4t"]->AddVariable("HT", &variableMap["HT"]);
+    readerMap["5j4t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
     readerMap["5j4t"]->AddVariable("tagged_dijet_mass_closest_to_125", &variableMap["tagged_dijet_mass_closest_to_125"]);
     readerMap["5j4t"]->AddVariable("M3", &variableMap["M3"]);
-    readerMap["5j4t"]->AddVariable("fourth_jet_pt", &variableMap["fourth_jet_pt"]);
-    readerMap["5j4t"]->AddVariable("third_jet_pt", &variableMap["third_jet_pt"]);
+    readerMap["5j4t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
+    readerMap["5j4t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
+    readerMap["5j4t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
+    readerMap["5j4t"]->AddVariable("avg_dr_tagged_jets", &variableMap["avg_dr_tagged_jets"]);
 
     // 64
-    readerMap["6j4t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
-    readerMap["6j4t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
-    readerMap["6j4t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
+        readerMap["6j4t"]->AddVariable("best_higgs_mass", &variableMap["best_higgs_mass"]);
     readerMap["6j4t"]->AddVariable("tagged_dijet_mass_closest_to_125", &variableMap["tagged_dijet_mass_closest_to_125"]);
-    readerMap["6j4t"]->AddVariable("best_higgs_mass", &variableMap["best_higgs_mass"]);
-    readerMap["6j4t"]->AddVariable("third_jet_pt", &variableMap["third_jet_pt"]);
-    readerMap["6j4t"]->AddVariable("avg_dr_tagged_jets", &variableMap["avg_dr_tagged_jets"]);
+    readerMap["6j4t"]->AddVariable("invariant_mass_of_everything", &variableMap["invariant_mass_of_everything"]);
+    readerMap["6j4t"]->AddVariable("fourth_highest_btag", &variableMap["fourth_highest_btag"]);
+    readerMap["6j4t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
+    readerMap["6j4t"]->AddVariable("fifth_highest_CSV", &variableMap["fifth_highest_CSV"]);
+
 
     // ==================================================
     //book MVAs from weights 
@@ -431,6 +424,7 @@ double BlrBDTClassifier::GetBDTOutput(const std::vector<TLorentzVector>& selecte
     variableMap["maxeta_jet_tag"]=jet_tag_etamax;
     variableMap["maxeta_tag_tag"]=tag_tag_etamax;
     variableMap["min_dr_tagged_jets"]=minDrTagged;
+    variableMap["Evt_M_MinDeltaRTaggedJets"]=closest_tagged_dijet_mass;
     variableMap["MET"]=metP4.Pt();
     variableMap["MHT"]=MHT;
     variableMap["Mlb"]=Mlb;

@@ -31,7 +31,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
 
     #create the MEM classifier, specifying the verbosity and b-tagger type
     cls_mem = ROOT.MEMClassifier(1, conf["btag"])
-    cls_bdt = ROOT.BlrBDTClassifier()
+    cls_bdt_sl = ROOT.BlrBDTClassifier()
+    cls_bdt_dl = ROOT.DLBDTClassifier()
 
     #one file
     if isinstance(infile_name, basestring):
@@ -75,6 +76,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     outtree.Branch("bdt", bufs["bdt"], "bdt/D")
 
     print "looping over event range [{0}, {1}]".format(firstEvent, lastEvent)
+    if lastEvent<0:
+        lastEvent = tree.GetEntries() - 1
     for iEv in range(firstEvent, lastEvent+1):
         tree.GetEntry(iEv)
         
@@ -84,6 +87,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         bufs["systematic"][0] = tree.systematic
     
         njets = tree.njets
+        nloose_jets = getattr(tree, "nloose_jets", 0)
         print "njets={0}".format(njets)
 
         #process jets
@@ -99,6 +103,28 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         jets_csv = vec_from_list(Cvectordouble, list(tree.jet_csv))
         jets_cmva = vec_from_list(Cvectordouble, list(tree.jet_cmva))
         jets_type = vec_from_list(CvectorJetType, list(tree.jet_type))
+        
+        #process jets
+        loose_jets_p4 = CvectorLorentz()
+        loose_jets_csv = vec_from_list(Cvectordouble, [])
+
+        if nloose_jets>0:
+            loose_jets_p4 = CvectorLorentz()
+            loose_jets_pt = list(tree.loose_jet_pt)
+            loose_jets_eta = list(tree.loose_jet_eta)
+            loose_jets_phi = list(tree.loose_jet_phi)
+            loose_jets_mass = list(tree.loose_jet_mass)
+            for iJet in range(njets):
+                v = ROOT.TLorentzVector()
+                v.SetPtEtaPhiM(jets_pt[iJet], jets_eta[iJet], jets_phi[iJet], jets_mass[iJet])
+                loose_jets_p4.push_back(v)
+            for iJet in range(nloose_jets):
+                v = ROOT.TLorentzVector()
+                v.SetPtEtaPhiM(loose_jets_pt[iJet], loose_jets_eta[iJet], loose_jets_phi[iJet], loose_jets_mass[iJet])
+                loose_jets_p4.push_back(v)
+            loose_jets_csv = vec_from_list(Cvectordouble, list(tree.jet_csv) + list(tree.loose_jet_csv))
+            loose_jets_cmva = vec_from_list(Cvectordouble, list(tree.jet_cmva) + list(tree.loose_jet_cmva))
+            loose_jets_type = vec_from_list(CvectorJetType, [0 for i in range(njets + nloose_jets)])
    
         #process leptons
         nleps = tree.nleps
@@ -139,26 +165,36 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
             met,
         )
 
-        #save the output
-        bufs["mem_p"][0] = ret.p
-        bufs["mem_p_sig"][0] = ret.p_sig
-        bufs["mem_p_bkg"][0] = ret.p_bkg
-        bufs["blr_4b"][0] = ret.blr_4b
-        bufs["blr_2b"][0] = ret.blr_2b
-       
-        loose_jets_p4 = jets_p4
-        loose_jets_csv = jets_csv
+        ##save the output
+        #bufs["mem_p"][0] = ret.p
+        #bufs["mem_p_sig"][0] = ret.p_sig
+        #bufs["mem_p_bkg"][0] = ret.p_bkg
+        #bufs["blr_4b"][0] = ret.blr_4b
+        #bufs["blr_2b"][0] = ret.blr_2b
+        bufs["bdt"][0] = 0
 
-        ret_bdt = cls_bdt.GetBDTOutput(
-            leps_p4,
-            jets_p4,
-            jets_csv,
-            loose_jets_p4,
-            loose_jets_csv,
-            met,
-            ret.blr_4b/(ret.blr_4b+ret.blr_2b)
-        )
-        bufs["bdt"][0] = ret_bdt
+        if len(leps_p4) == 1:
+            ret_bdt = cls_bdt_sl.GetBDTOutput(
+                leps_p4,
+                jets_p4,
+                jets_csv,
+                loose_jets_p4,
+                loose_jets_csv,
+                met,
+                ret.blr_4b/(ret.blr_4b+ret.blr_2b)
+            )
+            bufs["bdt"][0] = ret_bdt
+        elif len(leps_p4) == 2:
+            ret_bdt = cls_bdt_dl.GetBDTOutput(
+                leps_p4,
+                leps_charge,
+                jets_p4,
+                jets_csv,
+                met,
+            )
+            bufs["bdt"][0] = ret_bdt
+            print "DL bdt", ret_bdt
+        print "CommonClassifier/cc_looper mem={0} bdt={1}".format(ret.p, ret_bdt)
         outtree.Fill()
     
     outfile.Write()
@@ -178,11 +214,11 @@ if __name__ == "__main__":
 
     import argparse
     parser = argparse.ArgumentParser(description='Calculates the CommonClassifier on a common input ntuple')
-    parser.add_argument('--infile', action="store", nargs='+', help="Input file name (PFN)")
-    parser.add_argument('--firstEvent', action="store", help="first event (by index) in tree to use", type=int)
-    parser.add_argument('--lastEvent', action="store", help="last event (by index) in tree to use, inclusive (!)", type=int)
+    parser.add_argument('--infile', action="store", nargs='+', help="Input file name (PFN)", required=True)
+    parser.add_argument('--firstEvent', action="store", help="first event (by index) in tree to use", type=int, default=0)
+    parser.add_argument('--lastEvent', action="store", help="last event (by index) in tree to use, inclusive (!)", type=int, default=-1)
     parser.add_argument('--maxEvents', action="store", help="total number of events to process", type=int, required=False)
-    parser.add_argument('--outfile', action="store", help="output file name, must be writeable")
+    parser.add_argument('--outfile', action="store", help="output file name, must be writeable", default="out.root")
     parser.add_argument('--conf', type=str, choices=sorted(confs.keys()), default="CSV")
     args = parser.parse_args()
     conf = confs[args.conf]
