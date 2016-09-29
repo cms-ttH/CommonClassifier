@@ -424,7 +424,7 @@ double BlrBDTClassifier::GetBDTOutput(const std::vector<TLorentzVector>& selecte
     variableMap["maxeta_jet_tag"]=jet_tag_etamax;
     variableMap["maxeta_tag_tag"]=tag_tag_etamax;
     variableMap["min_dr_tagged_jets"]=minDrTagged;
-    variableMap["Evt_M_MinDeltaRTaggedJets"]=minDrTagged;
+    variableMap["Evt_M_MinDeltaRTaggedJets"]=closest_tagged_dijet_mass;
     variableMap["MET"]=metP4.Pt();
     variableMap["MHT"]=MHT;
     variableMap["Mlb"]=Mlb;
