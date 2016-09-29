@@ -166,11 +166,11 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         )
 
         ##save the output
-        #bufs["mem_p"][0] = ret.p
-        #bufs["mem_p_sig"][0] = ret.p_sig
-        #bufs["mem_p_bkg"][0] = ret.p_bkg
-        #bufs["blr_4b"][0] = ret.blr_4b
-        #bufs["blr_2b"][0] = ret.blr_2b
+        bufs["mem_p"][0] = ret.p
+        bufs["mem_p_sig"][0] = ret.p_sig
+        bufs["mem_p_bkg"][0] = ret.p_bkg
+        bufs["blr_4b"][0] = ret.blr_4b
+        bufs["blr_2b"][0] = ret.blr_2b
         bufs["bdt"][0] = 0
 
         if len(leps_p4) == 1:

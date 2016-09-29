@@ -19,7 +19,7 @@ def make_samples(target_dir):
     for fi in files:
         path_fi = os.path.join(target_dir, fi)
         lines = open(path_fi).readlines()
-        if len(lines) < 50:
+        if len(lines) < 10:
             skipped += [path_fi]
             continue
         samp = Sample(
@@ -78,8 +78,12 @@ if __name__ == "__main__":
         cfg.Site.storageSite = args.out
         
         cfg.Data.ignoreLocality = True
-                
-        submit(cfg)
+        
+        try:
+            submit(cfg)
+        except Exception as e:
+            print e
+            print "skipping"
 
     print "skipped samples"
     for skip in skipped:
