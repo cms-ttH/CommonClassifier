@@ -33,7 +33,7 @@ def make_samples(target_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Submits crab jobs')
-    parser.add_argument('--indir', action="store", help="path to samples", type=str, default="samples/kit")
+    parser.add_argument('--indir', action="store", help="path to samples", type=str, default="samples//kitMatthias")
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
