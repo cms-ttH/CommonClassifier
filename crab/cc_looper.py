@@ -87,7 +87,8 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         bufs["systematic"][0] = tree.systematic
     
         njets = tree.njets
-        nloose_jets = getattr(tree, "nloose_jets", 0)
+        #nloose_jets = getattr(tree, "nloose_jets", 0)
+        nloose_jets=0
         print "njets={0}".format(njets)
 
         #process jets
@@ -103,6 +104,13 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         jets_csv = vec_from_list(Cvectordouble, list(tree.jet_csv))
         jets_cmva = vec_from_list(Cvectordouble, list(tree.jet_cmva))
         jets_type = vec_from_list(CvectorJetType, list(tree.jet_type))
+        
+        # count b-tags
+        nbtags=0
+        for iJet in range(njets):
+	  if jets_csv[iJet]>=0.8:
+	    nbtags+=1
+	
         
         #process jets
         loose_jets_p4 = CvectorLorentz()
@@ -155,46 +163,55 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         elif conf["btag"] == "btagBDT_":
             jets_tagger = jets_cmva
        
+        doMem=True
         #calculate the MEM
-        ret = cls_mem.GetOutput(
-            leps_p4,
-            leps_charge,
-            jets_p4,
-            jets_tagger,
-            jets_type,
-            met,
-        )
+        if njets<=5:
+	  if nbtags==2:
+	    doMem=False
+	if doMem:   
+	  ret = cls_mem.GetOutput(
+	      leps_p4,
+	      leps_charge,
+	      jets_p4,
+	      jets_tagger,
+	      jets_type,
+	      met,
+	  )
+	  #save the output
+	  bufs["mem_p"][0] = ret.p
+	  bufs["mem_p_sig"][0] = ret.p_sig
+	  bufs["mem_p_bkg"][0] = ret.p_bkg
+	  bufs["blr_4b"][0] = ret.blr_4b
+	  bufs["blr_2b"][0] = ret.blr_2b
+	  bufs["bdt"][0] = 0
 
-        ##save the output
-        #bufs["mem_p"][0] = ret.p
-        #bufs["mem_p_sig"][0] = ret.p_sig
-        #bufs["mem_p_bkg"][0] = ret.p_bkg
-        #bufs["blr_4b"][0] = ret.blr_4b
-        #bufs["blr_2b"][0] = ret.blr_2b
-        bufs["bdt"][0] = 0
-
-        if len(leps_p4) == 1:
-            ret_bdt = cls_bdt_sl.GetBDTOutput(
-                leps_p4,
-                jets_p4,
-                jets_csv,
-                loose_jets_p4,
-                loose_jets_csv,
-                met,
-                ret.blr_4b/(ret.blr_4b+ret.blr_2b)
-            )
-            bufs["bdt"][0] = ret_bdt
-        elif len(leps_p4) == 2:
-            ret_bdt = cls_bdt_dl.GetBDTOutput(
-                leps_p4,
-                leps_charge,
-                jets_p4,
-                jets_csv,
-                met,
-            )
-            bufs["bdt"][0] = ret_bdt
-            print "DL bdt", ret_bdt
-        print "CommonClassifier/cc_looper mem={0} bdt={1}".format(ret.p, ret_bdt)
+        #if len(leps_p4) == 1:
+            #ret_bdt = cls_bdt_sl.GetBDTOutput(
+                #leps_p4,
+                #jets_p4,
+                #jets_csv,
+                #jets_p4,
+                #jets_csv,
+                #met,
+                #ret.blr_4b/(ret.blr_4b+ret.blr_2b)
+            #)
+            #bufs["bdt"][0] = ret_bdt
+        #elif len(leps_p4) == 2:
+            #ret_bdt = cls_bdt_dl.GetBDTOutput(
+                #leps_p4,
+                #leps_charge,
+                #jets_p4,
+                #jets_csv,
+                #met,
+            #)
+            #bufs["bdt"][0] = ret_bdt
+            #print "DL bdt", ret_bdt
+        ret_bdt=0
+        if doMem:
+	  print "CommonClassifier/cc_looper mem={0} bdt={1}".format(ret.p, ret_bdt)
+	else:
+	  print "no mem calculated"
+	  
         outtree.Fill()
     
     outfile.Write()

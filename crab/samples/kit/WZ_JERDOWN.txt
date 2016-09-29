@@ -1,0 +1,2 @@
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WZ_JERDOWN.root___0___199
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WZ_JERDOWN.root___200___236

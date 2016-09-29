@@ -1,0 +1,8 @@
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___0___199
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___200___399
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___400___599
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___600___799
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___800___999
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___1000___1199
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___1200___1399
+root://xrootd-cms.infn.it///store/user/kelmorab/MEMInputTrees_ICHEP_V3/WJets-HT-100-200_JERUP.root___1400___1508
