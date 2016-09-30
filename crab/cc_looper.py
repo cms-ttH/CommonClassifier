@@ -30,7 +30,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     lastEvent = int(lastEvent)
 
     #create the MEM classifier, specifying the verbosity and b-tagger type
-    cls_mem = ROOT.MEMClassifier(1, conf["btag"])
+    cls_mem = ROOT.MEMClassifier(0, conf["btag"])
     cls_bdt_sl = ROOT.BlrBDTClassifier()
     cls_bdt_dl = ROOT.DLBDTClassifier()
 
@@ -55,6 +55,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     bufs["run"] = np.zeros(1, dtype=np.int64)
     bufs["lumi"] = np.zeros(1, dtype=np.int64)
     bufs["systematic"] = np.zeros(1, dtype=np.int64)
+    bufs["hypo"] = np.zeros(1, dtype=np.int64)
     bufs["mem_p"] = np.zeros(1, dtype=np.float64)
     bufs["mem_p_sig"] = np.zeros(1, dtype=np.float64)
     bufs["mem_p_bkg"] = np.zeros(1, dtype=np.float64)
@@ -66,6 +67,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     outtree.Branch("run", bufs["run"], "run/L")
     outtree.Branch("lumi", bufs["lumi"], "lumi/L")
     outtree.Branch("systematic", bufs["systematic"], "systematic/L")
+    outtree.Branch("hypo", bufs["hypo"], "hypo/L")
 
     outtree.Branch("mem_p", bufs["mem_p"], "mem_p/D")
     outtree.Branch("mem_p_sig", bufs["mem_p_sig"], "mem_p_sig/D")
@@ -85,7 +87,10 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         bufs["run"][0] = tree.run
         bufs["lumi"][0] = tree.lumi
         bufs["systematic"][0] = tree.systematic
-    
+
+        hypo = getattr(tree, "hypo", -1)
+        bufs["hypo"][0] = hypo
+
         njets = tree.njets
         nloose_jets = getattr(tree, "nloose_jets", 0)
         print "njets={0}".format(njets)
@@ -155,22 +160,28 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         elif conf["btag"] == "btagBDT_":
             jets_tagger = jets_cmva
        
+        bufs["mem_p"][0] = 0
+        bufs["mem_p_sig"][0] = 0
+        bufs["mem_p_bkg"][0] = 0
+        bufs["blr_4b"][0] = 0
+        bufs["blr_2b"][0] = 0
         #calculate the MEM
-        ret = cls_mem.GetOutput(
-            leps_p4,
-            leps_charge,
-            jets_p4,
-            jets_tagger,
-            jets_type,
-            met,
-        )
+        if hypo >= -1:
+            ret = cls_mem.GetOutput(
+                leps_p4,
+                leps_charge,
+                jets_p4,
+                jets_tagger,
+                jets_type,
+                met,
+            )
 
-        ##save the output
-        bufs["mem_p"][0] = ret.p
-        bufs["mem_p_sig"][0] = ret.p_sig
-        bufs["mem_p_bkg"][0] = ret.p_bkg
-        bufs["blr_4b"][0] = ret.blr_4b
-        bufs["blr_2b"][0] = ret.blr_2b
+            ##save the output
+            bufs["mem_p"][0] = ret.p
+            bufs["mem_p_sig"][0] = ret.p_sig
+            bufs["mem_p_bkg"][0] = ret.p_bkg
+            bufs["blr_4b"][0] = ret.blr_4b
+            bufs["blr_2b"][0] = ret.blr_2b
         bufs["bdt"][0] = 0
 
         if len(leps_p4) == 1:
@@ -181,7 +192,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
                 loose_jets_p4,
                 loose_jets_csv,
                 met,
-                ret.blr_4b/(ret.blr_4b+ret.blr_2b)
+                bufs["blr_4b"][0]/(bufs["blr_4b"][0] + bufs["blr_2b"][0])
             )
             bufs["bdt"][0] = ret_bdt
         elif len(leps_p4) == 2:
@@ -194,7 +205,6 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
             )
             bufs["bdt"][0] = ret_bdt
             print "DL bdt", ret_bdt
-        print "CommonClassifier/cc_looper mem={0} bdt={1}".format(ret.p, ret_bdt)
         outtree.Fill()
     
     outfile.Write()
