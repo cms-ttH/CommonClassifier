@@ -15,19 +15,15 @@ def make_samples(target_dir):
     files = os.listdir(target_dir)
     files = filter(lambda x: x.endswith(".txt"), files)
     samples = []
-    skipped = []
     for fi in files:
         path_fi = os.path.join(target_dir, fi)
         lines = open(path_fi).readlines()
-        if len(lines) < 10:
-            skipped += [path_fi]
-            continue
         samp = Sample(
             name = fi.split(".")[0],
             filename = path_fi
         )
         samples += [samp]
-    return samples, skipped
+    return samples
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Submits crab jobs')
@@ -37,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
     args = parser.parse_args()
    
-    samples, skipped = make_samples(args.indir)
+    samples = make_samples(args.indir)
     
     for sample in samples:
         cfg = config()
@@ -60,7 +56,7 @@ if __name__ == "__main__":
         ]
         #1 event is roughly 60 seconds (1 minute), one also needs a O(~30%) time buffer to catch overflows, so
         # for 500 events 1.3 * 500 * 1 = 650
-        cfg.JobType.maxJobRuntimeMin = 650
+        cfg.JobType.maxJobRuntimeMin = 700
         
         cfg.section_("Data")
         cfg.Data.inputDBS = 'global'
@@ -84,7 +80,3 @@ if __name__ == "__main__":
         except Exception as e:
             print e
             print "skipping"
-
-    print "skipped samples"
-    for skip in skipped:
-        print skip
