@@ -3,7 +3,7 @@
 using namespace std;
 
 BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
-    if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/blrbdtweights_80X_V2/";
+    if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/blrbdtweights_80X_V3/";
     
     // ==================================================
     //init all variables potentially used in BDT set
