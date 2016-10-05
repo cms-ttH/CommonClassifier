@@ -165,9 +165,9 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
        
         doMem=True
         #calculate the MEM
-        if njets<=5:
-	  if nbtags==2:
-	    doMem=False
+        print "nbtags={0}".format(nbtags)
+        if nbtags==2:
+	  doMem=False
 	if doMem:   
 	  ret = cls_mem.GetOutput(
 	      leps_p4,
