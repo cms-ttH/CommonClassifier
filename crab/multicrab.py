@@ -1,4 +1,4 @@
-import argparse, os
+import argparse, os, glob
 from CRABAPI.RawCommand import crabCommand
 from CRABClient.UserUtilities import getUsernameFromSiteDB, config
 
@@ -11,15 +11,15 @@ def submit(config):
     res = crabCommand('submit', config = config)
     return res
 
-def make_samples(target_dir):
-    files = os.listdir(target_dir)
+def make_samples(globpattern):
+    files = glob.glob(globpattern)
     files = filter(lambda x: x.endswith(".txt"), files)
     samples = []
     for fi in files:
-        path_fi = os.path.join(target_dir, fi)
+        path_fi = fi
         lines = open(path_fi).readlines()
         samp = Sample(
-            name = fi.split(".")[0],
+            name = os.path.basename(fi.split(".")[0]),
             filename = path_fi
         )
         samples += [samp]
@@ -27,20 +27,24 @@ def make_samples(target_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Submits crab jobs')
-    parser.add_argument('--indir', action="store", help="path to samples", type=str, default="samples/eth")
+    parser.add_argument('--samples', action="store", help="sample file or glob", type=str, default="samples/eth/*.txt")
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
     args = parser.parse_args()
    
-    samples = make_samples(args.indir)
-    
+    samples = make_samples(args.samples)
+   
+    jobs_file = open("jobs_{0}.txt".format(args.tag), "w")
     for sample in samples:
         cfg = config()
         
         cfg.section_("General")
         cfg.General.requestName = 'MEM_{0}_{1}'.format(args.tag, sample.name)
-        cfg.General.workArea = 'crab_projects'
+        cfg.General.workArea = 'crab_projects/{0}'.format(args.tag)
+        if not os.path.exists(cfg.General.workArea):
+            os.makedirs(cfg.General.workArea)
+
         cfg.General.transferLogs = True
         
         cfg.section_("JobType")
@@ -55,8 +59,8 @@ if __name__ == "__main__":
             'cc_looper.py'
         ]
         #1 event is roughly 60 seconds (1 minute), one also needs a O(~30%) time buffer to catch overflows, so
-        # for 500 events 1.3 * 500 * 1 = 650
-        cfg.JobType.maxJobRuntimeMin = 700
+        # for 200 events 1.3 * 200 * 1 = 650
+        cfg.JobType.maxJobRuntimeMin = 300 #5 hours
         
         cfg.section_("Data")
         cfg.Data.inputDBS = 'global'
@@ -65,7 +69,7 @@ if __name__ == "__main__":
         cfg.Data.totalUnits = -1
         cfg.Data.userInputFiles = map(lambda x: x.strip(), open(sample.filename).readlines())
         cfg.Data.allowNonValidInputDataset = True # to run on datasets in PRODUCTION
-        cfg.Data.outLFNDirBase = '/store/user/{0}/mem/'.format(args.user)
+        cfg.Data.outLFNDirBase = '/store/user/{0}/mem/{1}'.format(args.user, args.tag)
         cfg.Data.publication = False
         #cfg.Data.outputDatasetTag = 'mem_test_v1'
         #cfg.Data.outputPrimaryDataset = "Crab_mem_test"
@@ -74,9 +78,14 @@ if __name__ == "__main__":
         cfg.Site.storageSite = args.out
         
         cfg.Data.ignoreLocality = True
-        
+
+        outpath = "{0}/crab_{1}".format(cfg.General.workArea, cfg.General.requestName)
+        print outpath
+        jobs_file.write(outpath + "\n") 
         try:
             submit(cfg)
         except Exception as e:
             print e
             print "skipping"
+
+    jobs_file.close()

@@ -9,7 +9,7 @@ root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep14_leptonic_no
 [data_m]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep14_leptonic_nome__SingleMuon.root = 272548
 [st_s]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1.root = 39510
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ST_s-channel_4f_leptonDecays_13TeV-amcatnlo-pythia8_TuneCUETP8M1.root = 79020
 [stbar_t]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ST_t-channel_antitop_4f_leptonDecays_13TeV-powheg-pythia8_TuneCUETP8M1.root = 47825
 [st_t]
@@ -21,26 +21,26 @@ root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ST_tW_t
 [ttjets_sl_t]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TTJets_SingleLeptFromT_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root = 3343940
 [ttjets_sl_tbar]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root = 4241640
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TTJets_SingleLeptFromTbar_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root = 8483280
 [ttw_wqq]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TTWJetsToQQ_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8.root = 272825
 [ttz_zqq]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TTZToQQ_TuneCUETP8M1_13TeV-amcatnlo-pythia8.root = 315130
 [ttjetsUnsplit_scaledown]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TT_TuneCUETP8M1_13TeV-powheg-scaledown-pythia8.root = 1623840
-[ttjetsUnsplit]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__TT_TuneCUETP8M1_13TeV-powheg-scaleup-pythia8.root = 1913485
 [ww]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__WW_TuneCUETP8M1_13TeV-pythia8.root = 465
 [zz]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__WZ_TuneCUETP8M1_13TeV-pythia8.root = 1185
 [zz]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ZZ_TuneCUETP8M1_13TeV-pythia8.root = 3865
-[ttH_nonhbb]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ttHToNonbb_M125_13TeV_powheg_pythia8.root = 1918125
 [ttH_nonhbb_tranche3]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8.root = 1973975
-[ttH_hbb]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ttHTobb_M125_13TeV_powheg_pythia8.root = 1086385
 [ttH_hbb_tranche3]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8.root = 2804530
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep29_v1__ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8.root = 2808225
+[ttH_nonhbb]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep14_leptonic_nome__ttHToNonbb_M125_13TeV_powheg_pythia8.root = 1918135
+[ttH_hbb]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep14_leptonic_nome__ttHTobb_M125_13TeV_powheg_pythia8.root = 2740140
+[ttjetsUnsplit]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct2/Sep14_leptonic_nome__TT_TuneCUETP8M1_13TeV-powheg-pythia8.root = 9133095

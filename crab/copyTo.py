@@ -18,7 +18,7 @@ def copy(infile, target_dir):
 
 if __name__ == "__main__":
     server = "eoscms.cern.ch"
-    target_dir = "/store/group/phys_higgs/hbb/mem/ETH_Oct2"
+    target_dir = "/store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl"
     
 
     infiles = sys.argv[1:]

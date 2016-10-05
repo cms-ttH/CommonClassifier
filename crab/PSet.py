@@ -5,7 +5,7 @@ process = cms.Process("FAKE")
 
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring([
-        "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root___0___4",
+        "root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/Sep14_leptonic_nome_v1__ttHTobb_M125_13TeV_powheg_pythia8.root___0___10",
     ]),
 )
 process.output = cms.OutputModule("PoolOutputModule",

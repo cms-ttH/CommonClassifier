@@ -1,0 +1,60 @@
+[Tranche3_ttbar_SL_1_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_1_JESDOWN.root = 544926
+[Tranche3_ttbar_SL_21_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_21_JESUP.root = 628540
+[Tranche3_ttbar_SL_21_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_21_JERUP.root = 553532
+[Tranche3_ttbar_SL_22_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_22_JERDOWN.root = 702989
+[Tranche3_ttbar_SL_22_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_22_JERUP.root = 602623
+[Tranche3_ttbar_SL_22_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_22_JESUP.root = 548809
+[Tranche3_ttbar_SL_23_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_23_JERDOWN.root = 455523
+[Tranche3_ttbar_SL_23_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_23_JERUP.root = 704854
+[Tranche3_ttbar_SL_23_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_23_JESDOWN.root = 624559
+[Tranche3_ttbar_SL_23_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_23_JESUP.root = 459448
+[Tranche3_ttbar_SL_24_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_24_JERDOWN.root = 481606
+[Tranche3_ttbar_SL_24_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_24_JERUP.root = 637757
+[Tranche3_ttbar_SL_24_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_24_JESUP.root = 458411
+[Tranche3_ttbar_SL_25_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_25_JERDOWN.root = 558092
+[Tranche3_ttbar_SL_25_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_25_JERUP.root = 568109
+[Tranche3_ttbar_SL_25_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_25_JESDOWN.root = 437398
+[Tranche3_ttbar_SL_25_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_25_JESUP.root = 675544
+[Tranche3_ttbar_SL_26_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_26_JERDOWN.root = 754997
+[Tranche3_ttbar_SL_26_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_26_JERUP.root = 617544
+[Tranche3_ttbar_SL_26_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_26_JESUP.root = 552007
+[Tranche3_ttbar_SL_26_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_26_JESDOWN.root = 242648
+[Tranche3_ttbar_SL_27_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_27_JERDOWN.root = 404330
+[Tranche3_ttbar_SL_27_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_27_JERUP.root = 415645
+[Tranche3_ttbar_SL_27_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_27_JESDOWN.root = 600139
+[Tranche3_ttbar_SL_28_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_28_JERDOWN.root = 594651
+[Tranche3_ttbar_SL_28_JERUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_28_JERUP.root = 465002
+[Tranche3_ttbar_SL_28_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_28_JESDOWN.root = 676371
+[Tranche3_ttbar_SL_28_JESUP]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_28_JESUP.root = 441100
+[Tranche3_ttbar_SL_29_JERDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_29_JERDOWN.root = 443573
+[Tranche3_ttbar_SL_29_JESDOWN]
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/MEMInputTrees_ICHEP_V3newttsl/Tranche3_ttbar_SL_29_JESDOWN.root = 557279

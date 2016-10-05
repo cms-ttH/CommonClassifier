@@ -101,13 +101,22 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         jets_eta = list(tree.jet_eta)
         jets_phi = list(tree.jet_phi)
         jets_mass = list(tree.jet_mass)
+        nBCSVM = 0
+        jets_csv = vec_from_list(Cvectordouble, list(tree.jet_csv))
+        jets_cmva = vec_from_list(Cvectordouble, list(tree.jet_cmva))
+        jets_type = vec_from_list(CvectorJetType, list(tree.jet_type))
         for iJet in range(njets):
             v = ROOT.TLorentzVector()
             v.SetPtEtaPhiM(jets_pt[iJet], jets_eta[iJet], jets_phi[iJet], jets_mass[iJet])
             jets_p4.push_back(v)
-        jets_csv = vec_from_list(Cvectordouble, list(tree.jet_csv))
-        jets_cmva = vec_from_list(Cvectordouble, list(tree.jet_cmva))
-        jets_type = vec_from_list(CvectorJetType, list(tree.jet_type))
+
+#FIXME FIXME dirty hack to count CSVM and exclude 2-tag events from MEM calculation
+            if jets_csv[iJet] > 0.8:
+                nBCSVM += 1
+        if nBCSVM == 2:
+            hypo = -2
+            bufs["hypo"][0] = hypo
+        print "nBCSVM={0}".format(nBCSVM)
         
         #process jets
         loose_jets_p4 = CvectorLorentz()
@@ -204,7 +213,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
                 met,
             )
             bufs["bdt"][0] = ret_bdt
-            print "DL bdt", ret_bdt
+        print "BDT={0}".format(bufs["bdt"][0])
         outtree.Fill()
     
     outfile.Write()

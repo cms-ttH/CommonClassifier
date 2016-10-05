@@ -28,16 +28,6 @@ root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JERUP.ro
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JESDOWN.root = 70
 [singletop_tw_JESUP]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/singletop_tw_JESUP.root = 80
-[ttbarH125tobbbar]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar.root = 26660
-[ttbarH125tobbbar_JERDOWN]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JERDOWN.root = 26705
-[ttbarH125tobbbar_JERUP]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JERUP.root = 26617
-[ttbarH125tobbbar_JESDOWN]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JESDOWN.root = 25885
-[ttbarH125tobbbar_JESUP]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tobbbar_JESUP.root = 27446
 [ttbarH125tononbbbar]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarH125tononbbbar.root = 535
 [ttbarH125tononbbbar_JERDOWN]
@@ -138,13 +128,3 @@ root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JERUP.root = 
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JESDOWN.root = 2
 [zztoall_JESUP]
 root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/zztoall_JESUP.root = 2
-[ttbarsignalplustau_fromDilepton0]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0.root = 143037
-[ttbarsignalplustau_fromDilepton0_JERDOWN]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JERDOWN.root = 143091
-[ttbarsignalplustau_fromDilepton0_JERUP]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JERUP.root = 142954
-[ttbarsignalplustau_fromDilepton0_JESDOWN]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JESDOWN.root = 132330
-[ttbarsignalplustau_fromDilepton0_JESUP]
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarsignalplustau_fromDilepton0_JESUP.root = 154413

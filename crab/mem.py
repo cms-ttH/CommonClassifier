@@ -31,8 +31,9 @@ inf_local = ROOT.TFile("infile.root", "RECREATE")
 tt2 = tt.CloneTree(0)
 nEvents = 0
 for iEv in range(firstEvent, lastEvent+1):
-    tt.GetEntry()
+    tt.GetEntry(iEv)
     tt2.Fill()
+    print iEv, tt.run, tt.lumi, tt.event
     nEvents += 1
 
 inf_local.Write()

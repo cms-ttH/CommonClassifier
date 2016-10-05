@@ -1,2 +1,3 @@
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERUP.root___0___299
-root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERUP.root___300___591
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERUP.root___0___199
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERUP.root___200___399
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/DESY/ttbarWjetstolnu_JERUP.root___400___591
