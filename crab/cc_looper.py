@@ -184,7 +184,14 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
 	  bufs["blr_4b"][0] = ret.blr_4b
 	  bufs["blr_2b"][0] = ret.blr_2b
 	  bufs["bdt"][0] = 0
-
+        
+        else:
+	  bufs["mem_p"][0] = -2.0
+	  bufs["mem_p_sig"][0] = -2.0
+	  bufs["mem_p_bkg"][0] = -2.0
+	  bufs["blr_4b"][0] = -2.0
+	  bufs["blr_2b"][0] = -2.0
+	  bufs["bdt"][0] = -2.0
         #if len(leps_p4) == 1:
             #ret_bdt = cls_bdt_sl.GetBDTOutput(
                 #leps_p4,

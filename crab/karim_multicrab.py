@@ -33,7 +33,7 @@ def make_samples(target_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Submits crab jobs')
-    parser.add_argument('--indir', action="store", help="path to samples", type=str, default="samples/kit")
+    parser.add_argument('--indir', action="store", help="path to samples", type=str, default="samples/kitnewttsl")
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
@@ -42,11 +42,12 @@ if __name__ == "__main__":
     samples, skipped = make_samples(args.indir)
     
     for sample in samples:
+        print sample.name
         cfg = config()
         
         cfg.section_("General")
         cfg.General.requestName = 'MEMKITV4_{0}_{1}'.format(args.tag, sample.name)
-        cfg.General.workArea = 'crab_projectsV4'
+        cfg.General.workArea = 'crab_projectsNewSLV4'
         cfg.General.transferLogs = True
         
         cfg.section_("JobType")
@@ -79,8 +80,8 @@ if __name__ == "__main__":
         cfg.section_("Site")
         cfg.Site.storageSite = args.out
         
-        cfg.section_("User")
-        cfg.User.voGroup = "dcms"
+        #cfg.section_("User")
+        #cfg.User.voGroup = "dcms"
         
         cfg.Data.ignoreLocality = True
         

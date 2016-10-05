@@ -11,6 +11,9 @@ for icp in crabProjectList:
     continue
   print "doing ", icp
   resultfile=open("tmpcrab.txt","w")
+  #if "ttH" in icp or "ttbar" in icp:
+    #print "skipping icp"
+    #continue
   subprocess.call(["crab status "+icp],shell=True, stdout=resultfile)
   resultfile.close()
   
@@ -25,7 +28,8 @@ for icp in crabProjectList:
   
   if toResubmit:
     print "resubmitting", icp
-    subprocess.call(["crab resubmit "+icp +" --maxmemory=2500 --siteblacklist=T2_US_Florida,T2_US_UCSD,T2_US_Wisconsin,T2_US_Nebraska"],shell=True)
-  
+    subprocess.call(["crab resubmit "+icp ],shell=True)
+      #subprocess.call(["crab resubmit "+icp +" --maxmemory=2500 --siteblacklist=T2_US_Florida,T2_US_UCSD,T2_US_Wisconsin,T2_US_Nebraska"],shell=True)
+
   #exit(0)
   #crab resubmit --maxmemory=2500 --siteblacklist=T2_US_Florida,T2_US_UCSD,T2_US_Wisconsin,T2_US_Nebraska crab_ttbar_incl_ICHEP0
