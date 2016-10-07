@@ -67,7 +67,7 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
     outtree.Branch("run", bufs["run"], "run/L")
     outtree.Branch("lumi", bufs["lumi"], "lumi/L")
     outtree.Branch("systematic", bufs["systematic"], "systematic/L")
-    outtree.Branch("hypo", bufs["hypo"], "hypo/L")
+    #outtree.Branch("hypo", bufs["hypo"], "hypo/L")
 
     outtree.Branch("mem_p", bufs["mem_p"], "mem_p/D")
     outtree.Branch("mem_p_sig", bufs["mem_p_sig"], "mem_p_sig/D")
@@ -88,7 +88,12 @@ def main(infile_name, firstEvent, lastEvent, outfile_name, conf):
         bufs["lumi"][0] = tree.lumi
         bufs["systematic"][0] = tree.systematic
 
-        hypo = getattr(tree, "hypo", -1)
+        if hasattr(tree, "hypothesis"):
+            hypo = tree.hypothesis
+        elif hasattr(tree, "hypo"):
+            hypo = tree.hypo
+        else:
+            hypo = -1
         bufs["hypo"][0] = hypo
 
         njets = tree.njets
@@ -244,5 +249,5 @@ if __name__ == "__main__":
 
     #use maxEvents if it was specified
     if not args.maxEvents is None:
-        args.lastEvent = args.firstEvent + args.maxEvents
+        args.lastEvent = args.firstEvent + args.maxEvents - 1
     main(args.infile, args.firstEvent, args.lastEvent, args.outfile, conf)

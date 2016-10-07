@@ -42,8 +42,38 @@ class ClassifierDB:
         if self.data.has_key(key):
             return self.data[key]
         return default
+    
+    def dump_missing_events(self, infile_name, outfile_name):
+        inf = ROOT.TFile.Open(infile_name)
+        tt = inf.Get("tree")
+        outf = ROOT.TFile(outfile_name, "RECREATE")
+        tt2 = tt.CloneTree(0)
+        n_missing = 0
+        for iEv in range(tt.GetEntries()):
+            tt.GetEntry(iEv)
+            run = tt.run
+            lumi = tt.lumi
+            ev = tt.event
+            syst = tt.systematic
+            k = (run, lumi, ev, syst)
+            if not self.data.has_key(k):
+                n_missing += 1
+                if n_missing % 100 == 0:
+                    print n_missing
+                tt2.Fill()
+       
+        print "input tree {0}, db {1}, output {2} ({3:.2f}%)".format(
+            tt.GetEntries(),
+            len(self.data),
+            tt2.GetEntries(),
+            100.0 * float(tt2.GetEntries())/float(tt.GetEntries())
+        )
+
+        outf.Write()
+        outf.Close()
+        inf.Close()
+        return n_missing
 
 if __name__ == "__main__":
     cls = ClassifierDB(filename=sys.argv[1])
-    for k in cls.data.keys()[:10]:
-        print k, cls[k]
+    cls.dump_missing_events(sys.argv[2], "missing.root")

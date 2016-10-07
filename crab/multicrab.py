@@ -31,6 +31,8 @@ if __name__ == "__main__":
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
+    #1 MEM event is roughly 60 seconds (1 minute), one also needs a O(~30%) time buffer to catch overflows, so
+    parser.add_argument('--runtime', action="store", help="job runtime in minutes", type=int, default=300)
     args = parser.parse_args()
    
     samples = make_samples(args.samples)
@@ -58,9 +60,7 @@ if __name__ == "__main__":
             'mem.py',
             'cc_looper.py'
         ]
-        #1 event is roughly 60 seconds (1 minute), one also needs a O(~30%) time buffer to catch overflows, so
-        # for 200 events 1.3 * 200 * 1 = 650
-        cfg.JobType.maxJobRuntimeMin = 300 #5 hours
+        cfg.JobType.maxJobRuntimeMin = args.runtime #5 hours
         
         cfg.section_("Data")
         cfg.Data.inputDBS = 'global'

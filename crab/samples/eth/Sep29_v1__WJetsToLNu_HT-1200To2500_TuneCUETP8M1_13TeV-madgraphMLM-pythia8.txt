@@ -1,0 +1,6 @@
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct6/Sep29_v1__WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root___0___1899
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct6/Sep29_v1__WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root___1900___3799
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct6/Sep29_v1__WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root___3800___5699
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct6/Sep29_v1__WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root___5700___7599
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct6/Sep29_v1__WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root___7600___9499
+root://eoscms.cern.ch//store/group/phys_higgs/hbb/mem/ETH_Oct6/Sep29_v1__WJetsToLNu_HT-1200To2500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.root___9500___11369
