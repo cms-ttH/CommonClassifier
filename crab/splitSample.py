@@ -140,23 +140,30 @@ def parse_config(cfg_path):
             samples += [samp]
     return samples
 
+def make_mergefile(samples):
+    mergefile = open("merge.dat", "w")
+    for samp in samples:
+        files = samp.get_output_files()
+        mergefile.write("[{0}]\n".format(samp.name))
+        for fi in files:
+            mergefile.write("{0} = 1\n".format(fi))
+        print "sample {0} had {1} merge files".format(samp.name, len(files))
+    mergefile.close()
+
 if __name__ == "__main__":
+
+    samples = parse_config("samples_eth.cfg")
+    #create_splitting(samples, "samples/eth", 300)
+    make_mergefile(samples)
+    #make_missing(samples)
+
     #samples = parse_config("samples_desy.cfg")
     #create_splitting(samples, "samples/desy", 100)
     
-    samples = parse_config("samples_kit.cfg")
+    #samples = parse_config("samples_kit.cfg")
     #for samp in samples:
     #    if os.path.exists(samp.additional_classifier_db_path):
     #        samp.merge_classifiers()
-    make_missing(samples) 
-    # mergefile = open("merge.dat", "w")
-    # for samp in samples:
-    #     files = samp.get_output_files()
-    #     mergefile.write("[{0}]\n".format(samp.name))
-    #     for fi in files:
-    #         mergefile.write("{0} = 1\n".format(fi))
-    #     print "sample {0} had {1} merge files".format(samp.name, len(files))
-    # mergefile.close()
 
     #create_splitting(samples, "samples/kit_dl", 200)
     #make_missing(samples) 

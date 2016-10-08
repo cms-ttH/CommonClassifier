@@ -31,8 +31,8 @@ if __name__ == "__main__":
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
-    #1 MEM event is roughly 60 seconds (1 minute), one also needs a O(~30%) time buffer to catch overflows, so
-    parser.add_argument('--runtime', action="store", help="job runtime in minutes", type=int, default=300)
+    #1 MEM event is roughly 60 seconds (1 minute), one also needs a O(~50%) time buffer to catch overflows, so
+    parser.add_argument('--runtime', action="store", help="job runtime in minutes", type=int, default=500)
     args = parser.parse_args()
    
     samples = make_samples(args.samples)

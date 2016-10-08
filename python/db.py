@@ -1,4 +1,4 @@
-import ROOT, sys
+import ROOT, sys, shelve
 
 class Classifiers:
     def __init__(self, **kwargs):
@@ -9,31 +9,40 @@ class Classifiers:
 class ClassifierDB:
     def __init__(self, *args, **kwargs):
         fn = kwargs.get("filename")
-        self.data = {}
+        if fn.endswith(".root"):
+            self.data = {}
 
-        if len(fn)>0:
-            self.tfile = ROOT.TFile.Open(fn)
-            self.tree = self.tfile.Get("tree")
+            if len(fn)>0:
+                self.tfile = ROOT.TFile.Open(fn)
+                self.tree = self.tfile.Get("tree")
 
-            for ev in self.tree:
-                run = ev.run
-                evt = ev.event
-                lumi = ev.lumi
-                syst = ev.systematic
+                for ev in self.tree:
+                    run = ev.run
+                    evt = ev.event
+                    lumi = ev.lumi
+                    syst = ev.systematic
 
-                self.data[(int(run), int(lumi), int(evt), int(syst))] = Classifiers(
-                    mem_p_sig=ev.mem_p_sig,
-                    mem_p_bkg=ev.mem_p_bkg,
-                    bdt=getattr(ev, "bdt", 0)
-                )
-            self.tfile.Close()
+                    key = "_".join(map(str, [run, lumi, evt, syst]))
+
+                    self.data[key] = Classifiers(
+                        mem_p_sig=ev.mem_p_sig,
+                        mem_p_bkg=ev.mem_p_bkg,
+                        bdt=getattr(ev, "bdt", 0)
+                    )
+                self.tfile.Close()
+                
+            print "ClassifierDB initialized from file={0} with len(k)={1} keys".format(
+                fn,
+                len(self.data)
+            )
             
-        print "ClassifierDB initialized from file={0} with len(k)={1} keys".format(
-            fn,
-            len(self.data)
-        )
-        
-        print "first few keys are", sorted(self.data.keys())[:5]
+            print "first few keys are", sorted(self.data.keys())[:5]
+            self.shelf = shelve.open(fn + ".shelve")
+            self.shelf.update(self.data)
+            self.shelf.close()
+        elif fn.endswith(".shelve"):
+            self.shelf = shelve.open(fn + ".shelve")
+            self.data = self.shelf
 
     def __getitem__(self, key):
         return self.data[key]
@@ -76,4 +85,3 @@ class ClassifierDB:
 
 if __name__ == "__main__":
     cls = ClassifierDB(filename=sys.argv[1])
-    cls.dump_missing_events(sys.argv[2], "missing.root")
