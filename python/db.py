@@ -1,48 +1,55 @@
 import ROOT, sys, shelve
+import numpy as np
 
 class Classifiers:
     def __init__(self, **kwargs):
         self.mem_p_sig = kwargs.get("mem_p_sig", 0)
         self.mem_p_bkg = kwargs.get("mem_p_bkg", 0)
-        self.bdt = kwargs.get("bdt", 0)
 
 class ClassifierDB:
     def __init__(self, *args, **kwargs):
         fn = kwargs.get("filename")
-        if fn.endswith(".root"):
-            self.data = {}
+        self.data = {}
 
-            if len(fn)>0:
-                self.tfile = ROOT.TFile.Open(fn)
-                self.tree = self.tfile.Get("tree")
+        if len(fn)>0:
+            self.tfile = ROOT.TFile.Open(fn)
+            self.tree = self.tfile.Get("tree")
 
-                for ev in self.tree:
-                    run = ev.run
-                    evt = ev.event
-                    lumi = ev.lumi
-                    syst = ev.systematic
-
-                    key = "_".join(map(str, [run, lumi, evt, syst]))
-
-                    self.data[key] = Classifiers(
-                        mem_p_sig=ev.mem_p_sig,
-                        mem_p_bkg=ev.mem_p_bkg,
-                        bdt=getattr(ev, "bdt", 0)
-                    )
-                self.tfile.Close()
+            bufs = {
+                "run": np.zeros(1, dtype=np.int64),
+                "lumi": np.zeros(1, dtype=np.int64),
+                "event": np.zeros(1, dtype=np.int64),
+                "systematic": np.zeros(1, dtype=np.int64),
+                "mem_p_sig" : np.zeros(1, dtype=np.float64),
+                "mem_p_bkg" : np.zeros(1, dtype=np.float64),
+            }
+            for k in bufs.keys():
+                self.tree.SetBranchAddress(k, bufs[k])
+            for iEv in range(self.tree.GetEntries()):
+                if iEv%1000000==0:
+                    print iEv, self.tree.GetEntries()
+                self.tree.GetEntry(iEv)
+                run = bufs["run"][0]
+                evt = bufs["event"][0]
+                lumi = bufs["lumi"][0]
+                syst = bufs["systematic"][0]
                 
-            print "ClassifierDB initialized from file={0} with len(k)={1} keys".format(
-                fn,
-                len(self.data)
-            )
+                mem_p_sig = bufs["mem_p_sig"][0]
+                mem_p_bkg = bufs["mem_p_bkg"][0]
+                if mem_p_sig > 0.0 and mem_p_bkg > 0.0:
+                    key = int(run), int(lumi), int(evt), int(syst)
+                    self.data[key] = Classifiers(
+                        mem_p_sig=mem_p_sig,
+                        mem_p_bkg=mem_p_bkg,
+                    )
+            self.tfile.Close()
             
-            print "first few keys are", sorted(self.data.keys())[:5]
-            self.shelf = shelve.open(fn + ".shelve")
-            self.shelf.update(self.data)
-            self.shelf.close()
-        elif fn.endswith(".shelve"):
-            self.shelf = shelve.open(fn + ".shelve")
-            self.data = self.shelf
+        print "ClassifierDB initialized from file={0} with len(k)={1} keys".format(
+            fn,
+            len(self.data)
+        )
+        
+        print "first few keys are", sorted(self.data.keys())[:5]
 
     def __getitem__(self, key):
         return self.data[key]
