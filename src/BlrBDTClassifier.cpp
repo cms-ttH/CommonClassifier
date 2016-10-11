@@ -3,8 +3,8 @@
 using namespace std;
 
 BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
-    if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/blrbdtweights_80X_V3/";
-    
+    if(weightpath=="") weightpath=string(getenv("CMSSW_BASE"))+"/src/TTH/CommonClassifier/data/blrbdtweights_80X_V4/";
+    std::cout<<weightpath<<std::endl;
     // ==================================================
     //init all variables potentially used in BDT set
     variableMap["all_sum_pt_with_met"]=-999.;
@@ -75,13 +75,14 @@ BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
     readerMap["6j2t"]->AddVariable("maxeta_tag_tag", &variableMap["maxeta_tag_tag"]);
 
     // 43
-        readerMap["4j3t"]->AddVariable("HT", &variableMap["HT"]);
+        readerMap["4j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
         readerMap["4j3t"]->AddVariable("third_highest_btag", &variableMap["third_highest_btag"]);
-        readerMap["4j3t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
-    readerMap["4j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
-        readerMap["4j3t"]->AddVariable("h1", &variableMap["h1"]);
+        readerMap["4j3t"]->AddVariable("HT", &variableMap["HT"]);
+    readerMap["4j3t"]->AddVariable("h1", &variableMap["h1"]);
     readerMap["4j3t"]->AddVariable("sphericity", &variableMap["sphericity"]);
-    readerMap["4j3t"]->AddVariable("fourth_jet_pt", &variableMap["fourth_jet_pt"]);
+    readerMap["4j3t"]->AddVariable("dev_from_avg_disc_btags", &variableMap["dev_from_avg_disc_btags"]);
+    readerMap["4j3t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
+    readerMap["4j3t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
 
     // 53
         readerMap["5j3t"]->AddVariable("blr_transformed", &variableMap["blr_transformed"]);
@@ -107,12 +108,10 @@ BlrBDTClassifier::BlrBDTClassifier (string weightpath):btagMcut(0.8){
     // 44
         readerMap["4j4t"]->AddVariable("all_sum_pt_with_met", &variableMap["all_sum_pt_with_met"]);
     readerMap["4j4t"]->AddVariable("avg_btag_disc_btags", &variableMap["avg_btag_disc_btags"]);
-    readerMap["4j4t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
     readerMap["4j4t"]->AddVariable("h3", &variableMap["h3"]);
     readerMap["4j4t"]->AddVariable("pt_all_jets_over_E_all_jets", &variableMap["pt_all_jets_over_E_all_jets"]);
-    readerMap["4j4t"]->AddVariable("dr_between_lep_and_closest_jet", &variableMap["dr_between_lep_and_closest_jet"]);
-    readerMap["4j4t"]->AddVariable("maxeta_jet_jet", &variableMap["maxeta_jet_jet"]);
-    readerMap["4j4t"]->AddVariable("HT", &variableMap["HT"]);
+    readerMap["4j4t"]->AddVariable("aplanarity", &variableMap["aplanarity"]);
+    readerMap["4j4t"]->AddVariable("closest_tagged_dijet_mass", &variableMap["closest_tagged_dijet_mass"]);
 
     // 54
         readerMap["5j4t"]->AddVariable("Evt_Deta_JetsAverage", &variableMap["Evt_Deta_JetsAverage"]);
