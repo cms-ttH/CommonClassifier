@@ -11,15 +11,14 @@ def submit(config):
     res = crabCommand('submit', config = config)
     return res
 
-def make_samples(globpattern):
-    files = glob.glob(globpattern)
-    files = filter(lambda x: x.endswith(".txt"), files)
+def make_samples(files):
     samples = []
     for fi in files:
         path_fi = fi
         lines = open(path_fi).readlines()
+        sampname = os.path.basename(fi).replace(".txt", "").replace(".", "_")
         samp = Sample(
-            name = os.path.basename(fi.split(".")[0]),
+            name = sampname,
             filename = path_fi
         )
         samples += [samp]
@@ -27,12 +26,12 @@ def make_samples(globpattern):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Submits crab jobs')
-    parser.add_argument('--samples', action="store", help="sample file or glob", type=str, default="samples/eth/*.txt")
+    parser.add_argument('--samples', action="store", nargs="+", help="sample files", type=str)
     parser.add_argument('--out', action="store", required=True, help="output site, e.g. T2_CH_CSCS", type=str)
     parser.add_argument('--tag', action="store", required=True, help="unique tag for processing", type=str)
     parser.add_argument('--user', action="store", help="username on grid", type=str, default=getUsernameFromSiteDB())
     #1 MEM event is roughly 60 seconds (1 minute), one also needs a O(~50%) time buffer to catch overflows, so
-    parser.add_argument('--runtime', action="store", help="job runtime in minutes", type=int, default=500)
+    parser.add_argument('--runtime', action="store", help="job runtime in minutes", type=int, default=700)
     args = parser.parse_args()
    
     samples = make_samples(args.samples)

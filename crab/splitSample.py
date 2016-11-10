@@ -42,13 +42,16 @@ def genSplitting(infile, perjob, outfile):
             perjob,
             len(job_chunks)
         )
-        if len(job_chunks) > 10000:
-            raise Exception("too many jobs, reduce splitting!")
 
-        of = open(outfile, "w")
-        for chunk in job_chunks:
-            of.write("{0}___{1}___{2}\n".format(infile, chunk[0], chunk[-1]))
-        of.close()
+        ifile = 0
+        cur_file = open(outfile + ".{0}".format(ifile), "w")
+        for ichunk, chunk in enumerate(job_chunks):
+            if ichunk > 0 and ichunk % 2000 == 0:
+                ifile += 1
+                cur_file.close()
+                cur_file = open(outfile + ".{0}".format(ifile), "w")
+            cur_file.write("{0}___{1}___{2}\n".format(infile, chunk[0], chunk[-1]))
+        cur_file.close()
         fi.Close()
     return nevents
 
@@ -153,8 +156,8 @@ def make_mergefile(samples):
 if __name__ == "__main__":
 
     samples = parse_config("samples_eth.cfg")
-    #create_splitting(samples, "samples/eth", 300)
-    make_mergefile(samples)
+    create_splitting(samples, "samples/eth", 300)
+    #make_mergefile(samples)
     #make_missing(samples)
 
     #samples = parse_config("samples_desy.cfg")
